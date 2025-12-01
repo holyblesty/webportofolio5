@@ -408,16 +408,18 @@
           </ul>
         </li>
 
-        <!-- Tombol LOGIN -->
-       <li class="nav-item ms-3">
-    <a id="loginBtn" href="#" class="btn fw-semibold px-3 py-2 rounded-3"
-   style="background-color:#e11584; color:white; font-size:14px;">
-   LOGIN
-      </a>
-      </li>
-      </ul>
-    </div>
-  </div>
+       <!-- ======================================================
+     NAVBAR + TOMBOL LOGIN
+====================================================== -->
+<li class="nav-item ms-3">
+  <a id="loginBtn" href="#" class="btn fw-semibold px-3 py-2 rounded-3"
+     style="background-color:#e11584; color:white; font-size:14px;">
+     LOGIN
+  </a>
+</li>
+</ul>
+</div>
+</div>
 </nav>
 
 <!-- ======================================================
@@ -431,8 +433,16 @@
       </div>
       <div class="modal-body text-center p-4">
         <p class="mb-4">Silakan pilih jenis login di bawah ini 💖</p>
-        <button id="btnLoginDosen" data-login-type="dosen" class="btn btn-pink w-100 mb-2 py-2 fw-semibold">Login Dosen</button>
-        <button id="btnLoginMahasiswa" data-login-type="mahasiswa" class="btn btn-pink w-100 py-2 fw-semibold">Login Mahasiswa</button>
+
+        <!-- Tombol pilih login -->
+        <button id="btnLoginDosen" data-login-type="dosen" class="btn btn-pink w-100 mb-2 py-2 fw-semibold">
+          Login Dosen
+        </button>
+
+        <button id="btnLoginMahasiswa" data-login-type="mahasiswa" class="btn btn-pink w-100 py-2 fw-semibold">
+          Login Mahasiswa
+        </button>
+
       </div>
     </div>
   </div>
@@ -447,22 +457,36 @@
       <div id="loginHeader" class="modal-header text-white text-center" style="background-color:#e11584; border-top-left-radius:20px; border-top-right-radius:20px;">
         <h5 id="formLoginModalLabel" class="modal-title w-100 fw-bold">Login</h5>
       </div>
+
       <div class="modal-body p-4">
-        <form id="popupLoginForm">
-          <div class="mb-3">
-            <label for="username" class="form-label fw-semibold">Username</label>
-            <input type="text" id="username" class="form-control" placeholder="Masukkan username">
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label fw-semibold">Password</label>
-            <input type="password" id="password" class="form-control" placeholder="Masukkan password">
-          </div>
-          <button type="submit" class="btn btn-pink w-100 fw-semibold py-2">Login 💖</button>
-        </form>
+
+      <!-- FORM LOGIN -->
+<form id="popupLoginForm" method="POST" action="login_proses.php">
+  
+  <!-- role (dosen/mahasiswa) akan diisi otomatis oleh tombol -->
+  <input type="hidden" id="role" name="role">
+
+  <div class="mb-3">
+    <label for="username" class="form-label fw-semibold">Username</label>
+    <input type="text" id="username" name="username" class="form-control" placeholder="Masukkan username" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="password" class="form-label fw-semibold">Password</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="Masukkan password" required>
+  </div>
+
+  <button type="submit" class="btn btn-pink w-100 fw-semibold py-2">
+    Login 💖
+  </button>
+</form>
+
+
       </div>
     </div>
   </div>
 </div>
+
   <!-- ======================================================
        KONTEN UTAMA
        ====================================================== -->
@@ -604,160 +628,63 @@
     });
   });
 
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("Script login aktif!");
 
-  // Inisialisasi semua elemen
-  const loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
-  const formLoginModal = new bootstrap.Modal(document.getElementById("formLoginModal"));
-  const formTitle = document.getElementById("formLoginModalLabel");
-  const header = document.getElementById("loginHeader");
-  const popupLoginForm = document.getElementById("popupLoginForm");
-  const loginBtn = document.getElementById("loginBtn");
-  const navbar = document.querySelector(".navbar-nav");
+// Inisialisasi elemen
+const loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
+const formLoginModal = new bootstrap.Modal(document.getElementById("formLoginModal"));
+const formTitle = document.getElementById("formLoginModalLabel");
+const header = document.getElementById("loginHeader");
+const popupLoginForm = document.getElementById("popupLoginForm");
+const loginBtn = document.getElementById("loginBtn");
 
-  let loginRole = ""; // Menyimpan role login (dosen / mahasiswa)
+// Form role (hidden input)
+const hiddenRole = document.getElementById("role");
 
-  // ==============================================
-  // Tombol Login di Navbar
-  // ==============================================
-  loginBtn.addEventListener("click", function (e) {
-    e.preventDefault();
-    loginModal.show();
-  });
+let loginRole = "";
 
-  // ==============================================
-  // Pilih Login Dosen
-  // ==============================================
-  document.getElementById("btnLoginDosen").addEventListener("click", function () {
-    loginRole = "dosen";
-    formTitle.textContent = "Login Dosen";
-    header.style.backgroundColor = "#e11584"; // Pink
-    loginModal.hide();
-    formLoginModal.show();
-  });
-
-  // ==============================================
-  // Pilih Login Mahasiswa
-  // ==============================================
-  document.getElementById("btnLoginMahasiswa").addEventListener("click", function () {
-    loginRole = "mahasiswa";
-    formTitle.textContent = "Login Mahasiswa";
-    header.style.backgroundColor = "#e11584"; // Pink
-    loginModal.hide();
-    formLoginModal.show();
-  });
-
-  // ==============================================
-  // Data Dummy Akun (Dari user)
-  // ==============================================
-   const dataLogin = {
-    dosen: [
-      { user: "115143", pass: "115143", nama: "Ahmad Hamim Thohari, S.S.T.,M.T." },
-      { user: "112093", pass: "112093", nama: "Yeni Rokhayati, S.Si., M.Sc" },
-      { user: "102020", pass: "102020", nama: "Hilda Widyastuti, S.T., M.T." },
-      { user: "107051", pass: "107051", nama: "Agus Fatulloh, S.T., M.T" },
-      { user: "112094", pass: "112094", nama: "Ir. Dwi Ely Kurniawan, S.Pd., M.Kom" },
-      { user: "119224", pass: "119224", nama: "Swono Sibagariang, S.Kom., M.Kom" },
-      { user: "122283", pass: "122283", nama: "Muhammad Idris, S.Tr., M.Tr.Kom" },
-      { user: "125351", pass: "125351", nama: "Nadya Satya Handayani, S.Kom., M.Kom" },
-      { user: "125359", pass: "125359", nama: "Sri Rahayu, M.Pd" },
-    ],
-    mahasiswa: [
-      { user: "intan_rahmadani", pass: "3312511022", nama: "Intan Rahmadani" },
-      { user: "afdal_hakim", pass: "3312511019", nama: "Afdal Hakim" },
-      { user: "muhammad_fachri", pass: "3312511020", nama: "Muhammad Fachri" },
-      { user: "lionel_mesy", pass: "3312511021", nama: "Lionel Mesy" },
-      { user: "nalita_izza", pass: "3312511009", nama: "Nalita Izza" },
-      { user: "andi_gaol", pass: "3312511008", nama: "Andi Gaol" },
-      { user: "dody_sinaga", pass: "3312511010", nama: "Dody Sinaga" },
-      { user: "muhammad_muas", pass: "3312511011", nama: "Muhammad Muas" },
-      { user: "muhammad_subhan", pass: "3312511004", nama: "Muhammad Subhan" },
-      { user: "muhammad_farhan", pass: "3312511005", nama: "Muhammad Farhan" },
-      { user: "firnanda_afian", pass: "3312511006", nama: "Firnanda Afian" },
-      { user: "muhammad_yasir", pass: "3312511007", nama: "Muhammad Yasir" },
-      { user: "m_khairil", pass: "3312511014", nama: "M. Khairil" },
-      { user: "divani_olivia", pass: "3312511012", nama: "Divani Olivia" },
-      { user: "yoga_agusetiawan", pass: "3312511013", nama: "Yoga Agusetiawan" },
-      { user: "qoonitah_damayanti", pass: "3312511015", nama: "Qoonitah Damayanti" },
-      { user: "aldi_firmansyah", pass: "3312511026", nama: "Aldi Firmansyah" },
-      { user: "adetyas_fauzia", pass: "3312511027", nama: "Adetyas Fauzia" },
-      { user: "lusiana_panggabean", pass: "3312511028", nama: "Lusiana Panggabean" },
-      { user: "maria_tamba", pass: "3312511029", nama: "Maria Tamba" }
-    ]
-  };
-
-  // ==============================================
-  // Proses Login
-  // ==============================================
-  popupLoginForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const user = document.getElementById("username").value.trim();
-    const pass = document.getElementById("password").value.trim();
-
-    if (!loginRole) {
-      alert("Pilih dulu jenis login: Dosen atau Mahasiswa!");
-      return;
-    }
-
-    const akunList = dataLogin[loginRole];
-    // cari akun dan ambil objek lengkapnya
-    const akunData = akunList.find(acc => acc.user === user && acc.pass === pass);
-
-    if (akunData) {
-      // simpan nama lengkap ke localStorage juga
-      localStorage.setItem("loggedIn", "true");
-      localStorage.setItem("username", user);
-      localStorage.setItem("namaLengkap", akunData.nama); // <-- simpan nama lengkap di sini
-      localStorage.setItem("role", loginRole);
-      alert("Login berhasil sebagai " + loginRole.toUpperCase() + " 🎉");
-      formLoginModal.hide();
-      location.reload();
-    } else {
-      alert("Username atau password salah!");
-    }
-  });
-
-  // ==============================================
-  // Cek Status Login (Tampilkan Profil)
-  // ==============================================
-  const isLoggedIn = localStorage.getItem("loggedIn") === "true";
-  const username = localStorage.getItem("username");
-  const role = localStorage.getItem("role");
-
-  if (isLoggedIn) {
-    loginBtn.style.display = "none";
-
-    // ambil nama lengkap dari localStorage (jangan pakai username)
-    const namaLengkap = localStorage.getItem("namaLengkap") || username;
-
-    const li = document.createElement("li");
-    li.classList.add("nav-item", "dropdown", "ms-3");
-    li.innerHTML = `
-      <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="https://via.placeholder.com/35" class="rounded-circle border border-light border-2" width="35" height="35">
-        <div class="d-flex flex-column align-items-start">
-          <span class="fw-semibold" style="color:#fff;">${namaLengkap}</span>
-          <small style="color:#ffd1e6; font-size: 0.85rem;">${role === "dosen" ? "Dosen" : "Mahasiswa"}</small>
-        </div>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end shadow-sm" style="border-radius:12px;">
-        <li><a class="dropdown-item text-center" href="#">Lihat Profil</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a id="logoutBtn" class="dropdown-item text-center text-danger fw-semibold" href="#">Logout</a></li>
-      </ul>
-    `;
-    navbar.appendChild(li);
-
-    // Tombol Logout
-    li.querySelector("#logoutBtn").addEventListener("click", function () {
-      localStorage.clear();
-      alert("Kamu telah logout 🌷");
-      location.reload();
-    });
-  }
+// Tombol LOGIN di navbar
+loginBtn.addEventListener("click", function () {
+  loginModal.show();
 });
+
+// Pilih Login Dosen
+document.getElementById("btnLoginDosen").addEventListener("click", function () {
+  loginRole = "dosen";
+  hiddenRole.value = "dosen";  // ← KIRIM KE PHP
+  formTitle.textContent = "Login Dosen";
+  header.style.backgroundColor = "#d63384";
+  formLoginModal.show();
+  loginModal.hide();
+});
+
+// Pilih Login Mahasiswa
+document.getElementById("btnLoginMahasiswa").addEventListener("click", function () {
+  loginRole = "mahasiswa";
+  hiddenRole.value = "mahasiswa"; // ← KIRIM KE PHP
+  formTitle.textContent = "Login Mahasiswa";
+  header.style.backgroundColor = "#e11584";
+  formLoginModal.show();
+  loginModal.hide();
+});
+
+// ==============================================
+// PROSES LOGIN KE PHP
+// ==============================================
+popupLoginForm.addEventListener("submit", function (e) {
+  let user = document.getElementById("username").value.trim();
+  let pass = document.getElementById("password").value.trim();
+
+  if (user === "" || pass === "") {
+    e.preventDefault(); // hanya block jika kosong
+    alert("Username dan password tidak boleh kosong!");
+    return;
+  }
+
+  // JANGAN BLOCK submit, biarkan form mengirim ke login_proses.php
+  // ALERT TIDAK DIBUTUHKAN
+});
+
+
 </script>
 
 </body>
