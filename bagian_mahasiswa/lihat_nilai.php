@@ -1,41 +1,96 @@
+```php
 <?php
+// ===============================
+// LIHAT NILAI & CATATAN PROYEK
+// VERSI PEMULA (SEMESTER 1)
+// ===============================
+
 session_start();
 include "koneksi.php";
 
+// Cek login mahasiswa
 if (!isset($_SESSION['id_mahasiswa'])) {
     header("Location: home.html");
     exit;
 }
 
 $id_mahasiswa = $_SESSION['id_mahasiswa'];
+$username = $_SESSION['username'];
 
-// Ambil semua portofolio milik mahasiswa beserta nilai
-$sql = "SELECT portofolio.judul, nilai.nilai, nilai.catatan, nilai.tanggal_penilaian
-        FROM portofolio
-        LEFT JOIN nilai ON portofolio.id_portofolio = nilai.id_portofolio
-        WHERE portofolio.id_mahasiswa = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id_mahasiswa);
-$stmt->execute();
-$result = $stmt->get_result();
+// Ambil data portofolio + nilai
+$sql = "SELECT p.judul, p.deskripsi, n.nilai, n.catatan, d.nama AS nama_dosen
+        FROM portofolio p
+        LEFT JOIN nilai n ON p.id_portofolio = n.id_portofolio
+        LEFT JOIN dosen d ON n.id_dosen = d.id_dosen
+        WHERE p.id_mahasiswa = '$id_mahasiswa'";
+
+$data = mysqli_query($koneksi, $sql);
 ?>
 
-<h2>Nilai Proyek Anda</h2>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Nilai Proyek</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
 
-<table border="1" cellpadding="8">
-    <tr>
-        <th>Judul Proyek</th>
-        <th>Nilai</th>
-        <th>Catatan</th>
-        <th>Tanggal Penilaian</th>
-    </tr>
+<div class="container mt-4">
+    <h3 class="mb-3">Nilai & Catatan Proyek</h3>
+    <p>Mahasiswa: <strong><?php echo $username; ?></strong></p>
 
-    <?php while ($row = $result->fetch_assoc()) { ?>
-        <tr>
-            <td><?= $row['judul'] ?></td>
-            <td><?= $row['nilai'] ?: '-' ?></td>
-            <td><?= $row['catatan'] ?: '-' ?></td>
-            <td><?= $row['tanggal_penilaian'] ?: '-' ?></td>
-        </tr>
+    <a href="dashboard_mhs.php" class="btn btn-secondary btn-sm mb-3">Kembali</a>
+
+    <?php if (mysqli_num_rows($data) == 0) { ?>
+        <div class="alert alert-info">Belum ada proyek yang dinilai</div>
+    <?php } else { ?>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-primary">
+            <tr>
+                <th>Judul Proyek</th>
+                <th>Nilai</th>
+                <th>Catatan</th>
+                <th>Dosen</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        $total = 0;
+        $jumlah = 0;
+
+        while ($row = mysqli_fetch_assoc($data)) {
+        ?>
+            <tr>
+                <td><?php echo $row['judul']; ?></td>
+                <td>
+                    <?php
+                    if ($row['nilai'] != null) {
+                        echo $row['nilai'];
+                        $total += $row['nilai'];
+                        $jumlah++;
+                    } else {
+                        echo "Belum dinilai";
+                    }
+                    ?>
+                </td>
+                <td><?php echo $row['catatan'] ?: '-'; ?></td>
+                <td><?php echo $row['nama_dosen'] ?: '-'; ?></td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+
+    <?php if ($jumlah > 0) { ?>
+        <div class="alert alert-success">
+            Rata-rata nilai: <strong><?php echo number_format($total / $jumlah, 2); ?></strong>
+        </div>
     <?php } ?>
-</table>
+
+    <?php } ?>
+</div>
+
+</body>
+</html>
+
