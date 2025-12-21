@@ -1,214 +1,145 @@
+```php
 <?php
+// ===============================
+// PORTOFOLIO MAHASISWA (VERSI PEMULA)
+// Dibuat dengan gaya mahasiswa semester 1
+// Tanpa konsep rumit, sesuai modul dasar PHP
+// ===============================
+
 session_start();
 include "koneksi.php";
 
-// ======================
-// Daftar user dan projek
-// ======================
-$users = [
-    "3312511001" => [
-        "nama"=>"Muhammad Kevin Fadillah",
-        "projek"=>"buku-tamu-tata-usaha.html",
-        "id_portofolio"=>1
-    ],
-    "3312511002" => [
-        "nama"=>"aliya putri ramadhani",
-        "projek"=>"buku-tamu-tata-usaha.html",
-        "id_portofolio"=>2
-    ],
-    "3312511004" => [
-        "nama"=>"muhammad subhan fajriansyah",
-        "projek"=>"pengelolaan-rapat.html",
-        "id_portofolio"=>3
-    ],
-      "3312511005" => [
-        "nama"=>"muhammad farhan",
-        "projek"=>"pengelolaan-rapat.html",
-        "id_portofolio"=>4
-    ],
-      "3312511006"	=> [
-        "nama"=>"firnanda habib nur afian",
-        "proyek"=>"pengelolaan-rapat.html",
-        "id_portofolio"=>5
-    ],
-      "3312511007"  => [
-        "nama"=>"muhammad yasir",
-        "proyek"=>"pengelolaan-rapat.html",
-        "id_portofolio"=>6
-    ],
-      "3312512008" => [
-        "nama"=>"Andi Lumbangaol",
-        "projek"=>"pencatatan-notulen.html",
-        "id_portofolio"=>7
-    ],
-      "3312512009" => [
-        "nama"=>"Nalita Nurul",
-        "projek"=>"pencatatan-notulen.html",
-        "id_portofolio"=>8
-    ],
-      "3312511010" => [
-        "nama"=>"dody sinaga",
-        "proyek"=>"pencatatan-notulen.html",
-        "id_portofolio"=>9
-    ],
-      "3312511011" => [
-        "nama"=>"muhammad mu'as",
-        "proyek"=>"pencatatan-notulen.html",
-        "id_portofolio"=>10
-    ],
-    "3312511012" => [
-        "nama"=>"divani putri olivia hutagaol",
-        "proyek"=>"pengelolaan-surat-peringatan-sp.html",
-        "id_portofolio"=>11
-    ],
-    "3312511013" => [
-        "nama"=>"yoga putra agusetiawan",
-        "proyek"=>"pengelolaan-surat-peringatan-sp.html",
-        "id_portofolio"=>12
-    ],
-    "3312511014" => [
-        "nama"=>"m.khairil candra",
-        "proyek"=>"pengelolaan-surat-peringatan-sp.html",
-        "id_portofolio"=>13
-    ],
-    "3312511015" => [
-        "nama"=>"qoonitah novia damayanti",
-        "proyek"=>"pengelolaan-surat-peringatan-sp.html",
-        "id_portofolio"=>14
-    ],
-    "3312511019" => [
-        "nama"=>"afdal rahman hakim",
-        "proyek"=>"jadwal-perkuliahan-mahasiswa-(pribadi).html",
-        "id_portofolio"=>15
-    ],
-    "3312511020" => [
-        "nama"=>"muhammad fachri sulthani",
-        "proyek"=>"jadwal-perkuliahan-mahasiswa-(pribadi).html",
-        "id_portofolio"=>16
-    ],
-    "3312511022" => [
-        "nama"=>"intan rahmadani putri",
-        "proyek"=>"jadwal-perkuliahan-mahasiswa-(pribadi).html",
-        "id_portofolio"=>17
-    ],
-    "3312511023" => [
-        "nama"=>"adetyas fauzia",
-        "proyek"=>"web-informasi-event-kampus.html",
-        "id_portofolio"=>18
-    ],
-    "3312511024" => [
-        "nama"=>"lusiana hotmauli panggabean",
-        "proyek"=>"web-informasi-event-kampus.html",
-        "id_portofolio"=>19
-    ],
-    "3312511025" => [
-        "nama"=>"maria putri agustina tamba",
-        "proyek"=>"web-informasi-event-kampus.html",
-        "id_portofolio"=>20
-    ],
-    "3312511026" => [
-        "nama"=>"aldi ernando firmansyah",
-        "proyek"=>"web-informasi-event-kampus.html",
-        "id_portofolio"=>21
-    ],
-    "3312511027" => [
-        "nama"=>"muhammad rafif akmal",
-        "proyek"=>"aplikasi-pengumuman-akademik-online.html",
-        "id_portofolio"=>22
-    ],
-    "3312511028" => [
-        "nama"=>"juni friskenny sinaga",
-        "proyek"=>"aplikasi-pengumuman-akademik-online.html",
-        "id_portofolio"=>23
-    ],
-    "3312511029" => [
-        "nama"=>"muhamad restu putra",
-        "proyek"=>"aplikasi-pengumuman-akademik-online.html",
-        "id_portofolio"=>24
-    ],
-    "3312511030" => [
-        "nama"=>"dita indriyan",
-        "proyek"=>"aplikasi-pengumuman-akademik-online.html",
-        "id_portofolio"=>25
-    ],
-];
-
-// ======================
 // Cek login mahasiswa
-// ======================
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'mahasiswa') {
-    header("Location: dashboard_mhs.php");
+if (!isset($_SESSION['id_mahasiswa'])) {
+    header("Location: home.html");
     exit;
 }
 
-// ======================
-// Ambil ID portofolio dari GET
-// ======================
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-if ($id <= 0) {
-    die("ID portofolio tidak valid.");
+$id_mahasiswa = $_SESSION['id_mahasiswa'];
+$nama = $_SESSION['nama'];
+
+// Ambil mode (tambah, lihat, edit, hapus)
+$mode = isset($_GET['mode']) ? $_GET['mode'] : "";
+
+// ===============================
+// FUNGSI UPLOAD GAMBAR (SANGAT SEDERHANA)
+// ===============================
+function upload_gambar() {
+    if ($_FILES['gambar']['name'] == "") {
+        return "";
+    }
+
+    $folder = "uploads/";
+    if (!is_dir($folder)) {
+        mkdir($folder);
+    }
+
+    $nama_file = time() . $_FILES['gambar']['name'];
+    move_uploaded_file($_FILES['gambar']['tmp_name'], $folder . $nama_file);
+    return $nama_file;
 }
 
-// ======================
-// Proteksi mahasiswa hanya bisa edit portofolio sendiri
-// ======================
-$username = $_SESSION['username'];
-if (!isset($users[$username])) {
-    die("Akses ditolak!");
+// ===============================
+// TAMBAH DATA
+// ===============================
+if ($mode == "tambah" && $_SERVER['REQUEST_METHOD'] == "POST") {
+    $judul = $_POST['judul'];
+    $deskripsi = $_POST['deskripsi'];
+    $repo = $_POST['repo_link'];
+    $gambar = upload_gambar();
+
+    $sql = "INSERT INTO portofolio VALUES ('', '$id_mahasiswa', '$judul', '$deskripsi', '$gambar', '$repo')";
+    mysqli_query($koneksi, $sql);
+
+    header("Location: portofolio_pemula.php");
+    exit;
 }
 
-$userPortofolio = $users[$username]['id_portofolio'];
-if ($id !== $userPortofolio) {
-    die("Anda tidak memiliki akses ke portofolio ini!");
-}
+// ===============================
+// HAPUS DATA
+// ===============================
+if ($mode == "hapus") {
+    $id = $_GET['id'];
 
-// ======================
-// Ambil data portofolio dari DB
-// ======================
-$sql = "SELECT * FROM portofolio WHERE id_portofolio = ?";
-$stmt = $koneksi->prepare($sql);
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$res = $stmt->get_result();
-if ($res->num_rows !== 1) {
-    die("Data portofolio tidak ditemukan.");
+    // Ambil nama gambar
+    $q = mysqli_query($koneksi, "SELECT gambar FROM portofolio WHERE id_portofolio='$id'");
+    $data = mysqli_fetch_assoc($q);
+
+    if ($data['gambar'] != "") {
+        unlink("uploads/" . $data['gambar']);
+    }
+
+    mysqli_query($koneksi, "DELETE FROM portofolio WHERE id_portofolio='$id'");
+    header("Location: portofolio_pemula.php");
+    exit;
 }
-$data = $res->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>Edit Portofolio #<?= $data['id_portofolio'] ?></title>
-  <style>body{font-family:Arial;margin:20px} img.full{max-width:100%;height:auto}</style>
+    <title>Portofolio Mahasiswa</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
-<body>
-  <a href="dashboard_mhs.php">← Kembali</a> | <a href="logout.php">Logout</a>
+<body class="container mt-4">
 
-  <h2>Edit Portofolio</h2>
-  <form action="simpan_portofolio.php" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="id_portofolio" value="<?= $data['id_portofolio'] ?>">
+<h3>Halo, <?php echo $nama; ?></h3>
 
-    <label>Judul:</label><br>
-    <input type="text" name="judul" required value="<?= htmlspecialchars($data['judul']) ?>"><br><br>
+<!-- =============================== -->
+<!-- FORM TAMBAH -->
+<!-- =============================== -->
+<h4>Tambah Portofolio</h4>
+<form method="POST" enctype="multipart/form-data" action="?mode=tambah">
+    <div class="mb-2">
+        <label>Judul</label>
+        <input type="text" name="judul" class="form-control" required>
+    </div>
 
-    <label>Deskripsi:</label><br>
-    <textarea name="deskripsi" rows="5" required><?= htmlspecialchars($data['deskripsi']) ?></textarea><br><br>
+    <div class="mb-2">
+        <label>Deskripsi</label>
+        <textarea name="deskripsi" class="form-control" required></textarea>
+    </div>
 
-    <label>Gambar Saat Ini:</label><br>
-    <?php if (!empty($data['gambar'])): ?>
-      <img src="<?= htmlspecialchars($data['gambar']) ?>" class="full" alt="gambar"><br>
-    <?php else: ?>
-      Tidak ada gambar.<br>
-    <?php endif; ?>
-    <label>Ganti Gambar:</label><br>
-    <input type="file" name="gambar"><br><br>
+    <div class="mb-2">
+        <label>Gambar</label>
+        <input type="file" name="gambar" class="form-control">
+    </div>
 
-    <label>Link Repository:</label><br>
-    <input type="text" name="repo_link" value="<?= htmlspecialchars($data['repo_link']) ?>"><br><br>
+    <div class="mb-2">
+        <label>Link Repository</label>
+        <input type="text" name="repo_link" class="form-control">
+    </div>
 
-    <button type="submit">Simpan Perubahan</button>
-  </form>
+    <button class="btn btn-primary">Simpan</button>
+</form>
+
+<hr>
+
+<!-- =============================== -->
+<!-- TAMPIL DATA -->
+<!-- =============================== -->
+<h4>Daftar Portofolio</h4>
+
+<?php
+$q = mysqli_query($koneksi, "SELECT * FROM portofolio WHERE id_mahasiswa='$id_mahasiswa'");
+while ($p = mysqli_fetch_assoc($q)) {
+?>
+    <div class="card mb-3" style="padding:10px;">
+        <h5><?php echo $p['judul']; ?></h5>
+        <p><?php echo $p['deskripsi']; ?></p>
+
+        <?php if ($p['gambar'] != "") { ?>
+            <img src="uploads/<?php echo $p['gambar']; ?>" width="200">
+        <?php } ?>
+
+        <p>
+            <a href="<?php echo $p['repo_link']; ?>" target="_blank">Repository</a>
+        </p>
+
+        <a href="?mode=hapus&id=<?php echo $p['id_portofolio']; ?>" onclick="return confirm('Hapus data?')" class="btn btn-danger btn-sm">Hapus</a>
+    </div>
+<?php } ?>
+
 </body>
 </html>
+```
