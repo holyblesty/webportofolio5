@@ -3,14 +3,12 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db   = "proyek"; // ← sesuai nama DATABASE kamu
+$db   = "proyek"; // ← sesuai nama DATABASE
 
-$conn = new mysqli($host, $user, $pass, $db);
-
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
+$koneksi = mysqli_connect($host, $user, $pass, $db);
+if ($koneksi) {
+  echo "Gagal konek: " . die(mysqli_error($koneksi));
 }
 
-$conn->set_charset("utf8mb4");
 ?>
 
