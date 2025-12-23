@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $password = $_POST['password'];
 
     $query = mysqli_query($conn,
-        "SELECT * FROM user 
+        "SELECT * FROM proyek 
          WHERE username='$username' 
          AND password='$password'"
     );
