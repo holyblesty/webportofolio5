@@ -11,18 +11,20 @@ if (!isset($_SESSION['id_dosen']) || $_SESSION['role'] !== 'dosen') {
 $id_dosen = $_SESSION['id_dosen'];
 
 // ambil nama dosen
-$q = mysqli_query($koneksi, "SELECT nama FROM dosen WHERE id_dosen='$id_dosen'");
+$q = mysqli_query(
+    $koneksi,
+    "SELECT nama FROM dosen WHERE id_dosen='$id_dosen'"
+);
 $data = mysqli_fetch_assoc($q);
 $nama = $data['nama'];
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Dosen</title>
 
-    <!-- Bootstrap sederhana (semester 1 aman) -->
+    <!-- Bootstrap (aman semester 1) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
@@ -39,7 +41,7 @@ $nama = $data['nama'];
         </div>
     </div>
 
-    <!-- NAVBAR MENU -->
+    <!-- MENU -->
     <div class="list-group mb-3">
         <a href="dashboard_dsn.php" class="list-group-item list-group-item-action">
             🏠 Dashboard
@@ -62,8 +64,31 @@ $nama = $data['nama'];
 
 </div>
 
+<!-- =========================
+     AUTO LOGOUT SAAT TAB DITUTUP
+     (TIDAK logout saat pindah halaman)
+========================= -->
+<script>
+/*
+  Tandai navigasi internal (klik / submit)
+*/
+document.addEventListener("click", function () {
+    sessionStorage.setItem("pindahHalaman", "ya");
+});
+document.addEventListener("submit", function () {
+    sessionStorage.setItem("pindahHalaman", "ya");
+});
+
+/*
+  Jika tab / window benar-benar ditutup
+*/
+window.addEventListener("beforeunload", function () {
+    if (!sessionStorage.getItem("pindahHalaman")) {
+        navigator.sendBeacon("../logout.php");
+    }
+    sessionStorage.removeItem("pindahHalaman");
+});
+</script>
+
 </body>
 </html>
-
-</script>
-</script>
