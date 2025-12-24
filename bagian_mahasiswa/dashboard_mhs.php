@@ -118,8 +118,17 @@ $nama = $dataNama['nama'];
             <?php } ?>
         </div>
     </div>
-
 </div>
 
+<!-- AUTO LOGOUT SAAT HALAMAN DITUTUP -->
+<script>
+window.addEventListener("beforeunload", function () {
+    fetch("../logout.php", {
+        method: "POST",
+        keepalive: true
+    });
+});
+
+</script>
 </body>
 </html>
