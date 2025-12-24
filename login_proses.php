@@ -1,8 +1,7 @@
 <?php
-// ===============================
-// PROSES LOGIN (DOSEN & MAHASISWA)
-// SESUAI MODUL SESSION SEMESTER 1
-// ===============================
+// session cookie hanya hidup selama browser terbuka
+session_set_cookie_params(0);
+session_start();
 
 session_start();
 include "koneksi.php";
