@@ -1,9 +1,9 @@
 <?php
 session_start();
-include "koneksi.php";
+include "../koneksi.php";
 
 if (!isset($_SESSION['id_mahasiswa']) || $_SESSION['role'] !== 'mahasiswa') {
-    header("Location: home.html");
+    header("Location: index.php");
     exit;
 }
 
