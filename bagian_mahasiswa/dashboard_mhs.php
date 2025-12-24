@@ -87,7 +87,6 @@ $nama = $dataNama['nama'];
                             <th width="5%">No</th>
                             <th>Judul</th>
                             <th>Deskripsi</th>
-                            <th width="20%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,17 +98,6 @@ $nama = $dataNama['nama'];
                             <td><?= $no++ ?></td>
                             <td><?= htmlspecialchars($p['judul']) ?></td>
                             <td><?= htmlspecialchars(substr($p['deskripsi'], 0, 50)) ?>...</td>
-                            <td>
-                                <a href="portofolio_detail.php?id=<?= $p['id_portofolio'] ?>" 
-                                   class="btn btn-sm btn-warning">
-                                    Edit
-                                </a>
-                                <a href="portofolio_detail.php?id=<?= $p['id_portofolio'] ?>" 
-                                   onclick="return confirm('Yakin hapus portofolio ini?')" 
-                                   class="btn btn-sm btn-danger">
-                                    Hapus
-                                </a>
-                            </td>
                         </tr>
                         <?php } ?>
                     </tbody>
