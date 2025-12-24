@@ -3,10 +3,10 @@ session_start();
 
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] === 'dosen') {
-        header("Location: dashboard_dsn.php");
+        header("Location: bagian_dosen/dashboard_dsn.php");
         exit;
     } elseif ($_SESSION['role'] === 'mahasiswa') {
-        header("Location: dashboard_mhs.php");
+        header("Location: bagian_mahasiswa/dashboard_mhs.php");
         exit;
     }
 }
