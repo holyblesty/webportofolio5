@@ -2,34 +2,65 @@
 session_start();
 include "koneksi.php";
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $role     = $_POST['role']; // role dari modal
 
-    $query = mysqli_query($conn,
-        "SELECT * FROM proyek 
-         WHERE username='$username' 
-         AND password='$password'"
-    );
+    /* ======================
+       LOGIN DOSEN
+    ====================== */
+    if ($role === 'dosen') {
 
-    if (mysqli_num_rows($query) == 1) {
+        $q = mysqli_query($conn, "SELECT * FROM dosen WHERE username='$username'");
+        if (mysqli_num_rows($q) === 1) {
 
-        $data = mysqli_fetch_assoc($query);
+            $data = mysqli_fetch_assoc($q);
 
-        $_SESSION['username'] = $data['username'];
-        $_SESSION['role']     = $data['role'];
+            if (password_verify($password, $data['password'])) {
 
-        if ($data['role'] == "dosen") {
-            header("Location: dashboard_dsn.php");
-        } else if ($data['role'] == "mahasiswa") {
-            header("Location: dashboard_mhs.php");
+                $_SESSION['id_dosen'] = $data['id_dosen'];
+                $_SESSION['username'] = $data['username'];
+                $_SESSION['role']     = 'dosen';
+
+                header("Location: dashboard_dsn.php");
+                exit;
+            }
         }
 
+        echo "Login dosen gagal. Username atau password salah.";
         exit;
-
-    } else {
-        echo "Username atau password salah";
     }
+
+    /* ======================
+       LOGIN MAHASISWA
+    ====================== */
+    if ($role === 'mahasiswa') {
+
+        $q = mysqli_query($conn, "SELECT * FROM mahasiswa WHERE username='$username'");
+        if (mysqli_num_rows($q) === 1) {
+
+            $data = mysqli_fetch_assoc($q);
+
+            if (password_verify($password, $data['password'])) {
+
+                $_SESSION['id_mahasiswa'] = $data['id_mahasiswa'];
+                $_SESSION['username'] = $data['username'];
+                $_SESSION['role']     = 'mahasiswa';
+
+                header("Location: dashboard_mhs.php");
+                exit;
+            }
+        }
+
+        echo "Login mahasiswa gagal. Username atau password salah.";
+        exit;
+    }
+
+    /* ======================
+       ROLE TIDAK VALID
+    ====================== */
+    echo "Role login tidak valid.";
 }
 ?>
