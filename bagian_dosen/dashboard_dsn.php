@@ -2,9 +2,7 @@
 session_start();
 include "../koneksi.php";
 
-// ===============================
-// CEK LOGIN DOSEN
-// ===============================
+// cek login dosen
 if (!isset($_SESSION['id_dosen']) || $_SESSION['role'] !== 'dosen') {
     header("Location: ../index.php");
     exit;
@@ -12,15 +10,9 @@ if (!isset($_SESSION['id_dosen']) || $_SESSION['role'] !== 'dosen') {
 
 $id_dosen = $_SESSION['id_dosen'];
 
-// ===============================
-// AMBIL NAMA DOSEN
-// ===============================
-$query = mysqli_query(
-    $koneksi,
-    "SELECT nama FROM dosen WHERE id_dosen='$id_dosen'"
-);
-
-$data = mysqli_fetch_assoc($query);
+// ambil nama dosen
+$q = mysqli_query($koneksi, "SELECT nama FROM dosen WHERE id_dosen='$id_dosen'");
+$data = mysqli_fetch_assoc($q);
 $nama = $data['nama'];
 ?>
 
@@ -72,3 +64,13 @@ $nama = $data['nama'];
 
 </body>
 </html>
+
+<!-- AUTO LOGOUT SAAT HALAMAN DITUTUP -->
+<script>
+window.addEventListener("beforeunload", function () {
+    fetch("../logout.php", {
+        method: "POST",
+        keepalive: true
+    });
+});
+</script>
