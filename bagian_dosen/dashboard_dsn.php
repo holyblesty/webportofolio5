@@ -65,14 +65,5 @@ $nama = $data['nama'];
 </body>
 </html>
 
-<script>
-document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") {
-        fetch("../logout.php", {
-            method: "POST",
-            keepalive: true
-        });
-    }
-});
 </script>
 </script>
