@@ -132,7 +132,7 @@ if (isset($_SESSION['role'])) {
       <ul class="navbar-nav">
 
         <li class="nav-item">
-          <a class="nav-link active text-white" href="home.html">BERANDA</a>
+          <a class="nav-link active text-white" href="index.php">BERANDA</a>
         </li>
 
         <li class="nav-item dropdown">
@@ -220,7 +220,7 @@ if (isset($_SESSION['role'])) {
         <p class="fw-bold fs-3">POLITEKNIK NEGERI BATAM</p>
       </div>
 
-      <div class="content-box quote fade-up">
+      <div class="content-box quote">
         "Setiap proyek kecil membawa langkah besar menuju impian."
       </div>
     </div>
