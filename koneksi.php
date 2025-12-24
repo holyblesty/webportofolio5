@@ -2,12 +2,11 @@
 // koneksi.php
 $host = "localhost";
 $user = "root";
-$pass = "";
-$db   = "proyek"; // ← sesuai nama DATABASE
+$pass = "";$db   = "proyek"; // nama database
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
-if ($koneksi) {
-  echo "Gagal konek: " . die(mysqli_error($koneksi));
+
+if (!$koneksi) {
+    die("Gagal koneksi database: " . mysqli_connect_error());
 }
 ?>
-
