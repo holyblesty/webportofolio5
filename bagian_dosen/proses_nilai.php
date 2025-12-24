@@ -1,111 +1,142 @@
 <?php
 session_start();
-include "koneksi.php";
+include "../koneksi.php";
 
-if (!isset($_SESSION['id_dosen'])) {
-    header("Location: home.html");
+/* =========================
+   CEK LOGIN DOSEN
+========================= */
+if (!isset($_SESSION['id_dosen']) || $_SESSION['role'] !== 'dosen') {
+    header("Location: ../index.php");
     exit;
 }
 
+$id_dosen = $_SESSION['id_dosen'];
+
 /* =========================
-   SIMPAN NILAI
+   SIMPAN / UPDATE NILAI
 ========================= */
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $id_portofolio = $_POST['id_portofolio'];
-    $nilai   = $_POST['nilai'];
-    $catatan = $_POST['catatan'];
-
-    // gaya semester 1 (escape manual)
-    $id_portofolio = mysqli_real_escape_string($koneksi, $id_portofolio);
-    $nilai         = mysqli_real_escape_string($koneksi, $nilai);
-    $catatan       = mysqli_real_escape_string($koneksi, $catatan);
+    $id_portofolio = mysqli_real_escape_string($koneksi, $_POST['id_portofolio']);
+    $nilai         = mysqli_real_escape_string($koneksi, $_POST['nilai']);
+    $catatan       = mysqli_real_escape_string($koneksi, $_POST['catatan']);
 
     if ($nilai < 0 || $nilai > 100) {
-        echo "<script>alert('Data nilai tidak valid'); window.history.back();</script>";
+        $_SESSION['error'] = "Nilai harus antara 0–100.";
+        header("Location: portofolio_dsn.php");
         exit;
     }
 
-    // update nilai (sesuai kode asli, gaya dasar)
-    $query = mysqli_query($koneksi,
-        "UPDATE portofolio 
-         SET nilai='$nilai' 
-         WHERE id_portofolio='$id_portofolio'"
+    // cek apakah nilai sudah ada
+    $cek = mysqli_query($koneksi,
+        "SELECT id_nilai FROM nilai 
+         WHERE id_portofolio='$id_portofolio' 
+         AND id_dosen='$id_dosen'"
     );
 
-    if ($query) {
-        echo "<script>alert('Nilai berhasil disimpan'); window.location='portofolio_detail.php?id=$id_portofolio';</script>";
+    if (mysqli_num_rows($cek) > 0) {
+        // UPDATE nilai
+        mysqli_query($koneksi,
+            "UPDATE nilai 
+             SET nilai='$nilai', catatan='$catatan'
+             WHERE id_portofolio='$id_portofolio' 
+             AND id_dosen='$id_dosen'"
+        );
+        $_SESSION['success'] = "Nilai berhasil diperbarui.";
     } else {
-        echo "<script>alert('Gagal menyimpan nilai'); window.history.back();</script>";
+        // INSERT nilai baru
+        mysqli_query($koneksi,
+            "INSERT INTO nilai (id_portofolio, id_dosen, nilai, catatan)
+             VALUES ('$id_portofolio', '$id_dosen', '$nilai', '$catatan')"
+        );
+        $_SESSION['success'] = "Nilai berhasil disimpan.";
     }
+
+    header("Location: portofolio_dsn.php");
     exit;
 }
 
 /* =========================
-   AMBIL DATA (BERI / EDIT NILAI)
+   AMBIL DATA PORTOFOLIO
 ========================= */
 if (!isset($_GET['id_portofolio'])) {
-    echo "ID Portofolio tidak ditemukan!";
+    echo "ID portofolio tidak ditemukan.";
     exit;
 }
 
-$id_portofolio = $_GET['id_portofolio'];
-$id_portofolio = mysqli_real_escape_string($koneksi, $id_portofolio);
+$id_portofolio = mysqli_real_escape_string($koneksi, $_GET['id_portofolio']);
 
-/* ambil portofolio + mahasiswa */
+// ambil data portofolio + mahasiswa
 $data = mysqli_query($koneksi,
     "SELECT p.*, m.nama 
      FROM portofolio p
-     JOIN login_mhs m ON m.id_mahasiswa = p.id_mahasiswa
+     JOIN mahasiswa m ON m.id_mahasiswa = p.id_mahasiswa
      WHERE p.id_portofolio='$id_portofolio'"
 );
 
-$data_portofolio = mysqli_fetch_array($data);
+$portofolio = mysqli_fetch_assoc($data);
 
-/* ambil nilai sebelumnya */
-$data_nilai = mysqli_query($koneksi,
-    "SELECT * FROM nilai WHERE id_portofolio='$id_portofolio'"
+// ambil nilai jika sudah ada
+$qNilai = mysqli_query($koneksi,
+    "SELECT * FROM nilai 
+     WHERE id_portofolio='$id_portofolio' 
+     AND id_dosen='$id_dosen'"
 );
-
-$nilai = mysqli_fetch_array($data_nilai);
+$nilaiData = mysqli_fetch_assoc($qNilai);
 ?>
 
-<h2>
-<?php
-if ($nilai) {
-    echo "Edit Nilai";
-} else {
-    echo "Beri Nilai";
-}
-?>
-</h2>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title><?= $nilaiData ? "Edit Nilai" : "Beri Nilai" ?></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
 
-<form action="proses_nilai.php" method="POST">
+<div class="container mt-5" style="max-width:600px;">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <?= $nilaiData ? "Edit Nilai Portofolio" : "Beri Nilai Portofolio" ?>
+        </div>
+        <div class="card-body">
 
-    <input type="hidden" name="id_portofolio"
-           value="<?php echo $data_portofolio['id_portofolio']; ?>">
+            <form method="POST">
+                <input type="hidden" name="id_portofolio" value="<?= $portofolio['id_portofolio'] ?>">
 
-    Nama Mahasiswa:<br>
-    <input type="text" value="<?php echo $data_portofolio['nama']; ?>" readonly><br><br>
+                <div class="mb-3">
+                    <label>Nama Mahasiswa</label>
+                    <input type="text" class="form-control" value="<?= htmlspecialchars($portofolio['nama']) ?>" readonly>
+                </div>
 
-    Judul Proyek:<br>
-    <input type="text" value="<?php echo $data_portofolio['judul']; ?>" readonly><br><br>
+                <div class="mb-3">
+                    <label>Judul Proyek</label>
+                    <input type="text" class="form-control" value="<?= htmlspecialchars($portofolio['judul']) ?>" readonly>
+                </div>
 
-    Nilai:<br>
-    <input type="number" name="nilai" min="0" max="100"
-           value="<?php echo $nilai['nilai']; ?>" required><br><br>
+                <div class="mb-3">
+                    <label>Nilai (0–100)</label>
+                    <input type="number" name="nilai" class="form-control" min="0" max="100"
+                           value="<?= $nilaiData['nilai'] ?? '' ?>" required>
+                </div>
 
-    Catatan:<br>
-    <textarea name="catatan" rows="4"><?php echo $nilai['catatan']; ?></textarea><br><br>
+                <div class="mb-3">
+                    <label>Catatan</label>
+                    <textarea name="catatan" class="form-control" rows="4"><?= $nilaiData['catatan'] ?? '' ?></textarea>
+                </div>
 
-    <button type="submit">
-        <?php
-        if ($nilai) {
-            echo "Perbarui Nilai";
-        } else {
-            echo "Simpan Nilai";
-        }
-        ?>
-    </button>
+                <button class="btn btn-primary w-100">
+                    <?= $nilaiData ? "Perbarui Nilai" : "Simpan Nilai" ?>
+                </button>
+            </form>
 
-</form>
+            <div class="text-center mt-3">
+                <a href="portofolio_dsn.php">← Kembali ke Portofolio</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
