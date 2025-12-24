@@ -143,7 +143,7 @@ if (isset($_SESSION['role'])) {
             <li><a class="dropdown-item" href="pengelolaan-rapat.html">PENGELOLAAN RAPAT</a></li>
             <li><a class="dropdown-item" href="pencatatan-notulen.html">PENCATATAN NOTULEN</a></li>
             <li><a class="dropdown-item" href="pengelolaan-surat-peringatan-sp.html">PENGELOLAAN SURAT PERINGATAN SP</a></li>
-            <li><a class="dropdown-item" href="jadwal-perkuliahan-mahasiswa-(pribadi).html">JADWAL PERKULIAHAN MAHASISWA</a></li>
+            <li><a class="dropdown-item" href="jadwal-perkuliahan-mahasiswa-pribadi.html">JADWAL PERKULIAHAN MAHASISWA</a></li>
             <li><a class="dropdown-item" href="web-informasi-event-kampus.html">WEB INFORMASI EVENT KAMPUS</a></li>
             <li><a class="dropdown-item" href="aplikasi-pengumuman-akademik-online.html">APLIKASI PENGUMUMAN AKADEMIK ONLINE</a></li>
           </ul>
