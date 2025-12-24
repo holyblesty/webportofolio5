@@ -104,7 +104,7 @@ $nama = $dataNama['nama'];
                                    class="btn btn-sm btn-warning">
                                     Edit
                                 </a>
-                                <a href="hapus_portofolio.php?id=<?= $p['id_portofolio'] ?>" 
+                                <a href="portofolio_detail.php?id=<?= $p['id_portofolio'] ?>" 
                                    onclick="return confirm('Yakin hapus portofolio ini?')" 
                                    class="btn btn-sm btn-danger">
                                     Hapus
@@ -120,15 +120,16 @@ $nama = $dataNama['nama'];
     </div>
 </div>
 
-<!-- AUTO LOGOUT SAAT HALAMAN DITUTUP -->
 <script>
-window.addEventListener("beforeunload", function () {
-    fetch("../logout.php", {
-        method: "POST",
-        keepalive: true
-    });
+document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") {
+        fetch("../logout.php", {
+            method: "POST",
+            keepalive: true
+        });
+    }
 });
-
 </script>
+
 </body>
 </html>
