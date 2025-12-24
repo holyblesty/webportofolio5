@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] === 'dosen') {
+        header("Location: dashboard_dsn.php");
+        exit;
+    } elseif ($_SESSION['role'] === 'mahasiswa') {
+        header("Location: dashboard_mhs.php");
+        exit;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
