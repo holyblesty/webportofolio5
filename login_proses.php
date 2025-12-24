@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (password_verify($password, $data['password'])) {
                 $_SESSION['id_dosen'] = $data['id_dosen'];
                 $_SESSION['role'] = 'dosen';
-                header("Location: dashboard_dsn.php");
+                header("Location: bagian_dosen/dashboard_dsn.php");
                 exit;
             }
         }
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (password_verify($password, $data['password'])) {
                 $_SESSION['id_mahasiswa'] = $data['id_mahasiswa'];
                 $_SESSION['role'] = 'mahasiswa';
-                header("Location: dashboard_mhs.php");
+                header("Location: bagian_mahasiswa/dashboard_mhs.php");
                 exit;
             }
         }
