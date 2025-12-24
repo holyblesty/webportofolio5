@@ -54,6 +54,7 @@ $nama = $dataNama['nama'];
                 <th width="5%">No</th>
                 <th width="15%">Gambar</th>
                 <th>Judul</th>
+                <th width="15%">Repository</th>
                 <th width="25%">Kelola</th>
             </tr>
         </thead>
@@ -75,7 +76,17 @@ $nama = $dataNama['nama'];
                 </td>
 
                 <td><?= htmlspecialchars($p['judul']) ?></td>
-
+               <!-- REPOSITORY -->
+                <td>
+                 <?php if (!empty($p['repo_link'])) { ?>
+                <a href="<?= htmlspecialchars($p['repo_link']) ?>" target="_blank">
+                Lihat Repo
+                 </a>
+                <?php } else { ?>
+                     -
+                <?php } ?>
+                 </td>
+                 
                   <td>
                   <a href="portofolio_detail.php?id=<?= $p['id_portofolio'] ?>"
                     class="btn btn-outline-primary btn-sm">
