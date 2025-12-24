@@ -65,12 +65,14 @@ $nama = $data['nama'];
 </body>
 </html>
 
-<!-- AUTO LOGOUT SAAT HALAMAN DITUTUP -->
 <script>
-window.addEventListener("beforeunload", function () {
-    fetch("../logout.php", {
-        method: "POST",
-        keepalive: true
-    });
+document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") {
+        fetch("../logout.php", {
+            method: "POST",
+            keepalive: true
+        });
+    }
 });
+</script>
 </script>
