@@ -28,6 +28,7 @@ $nama = $data['nama'];
 <div style="margin-bottom: 15px;">
     <a href="dashboard_dsn.php">🏠 Dashboard</a> |
     <a href="portofolio_dsn.php">📁 Portofolio Mahasiswa</a> |
+    <a href="ganti_password_dsn.php">🔑 Ganti Password</a>
     <a href="../logout.php">🚪 Logout</a>
 </div>
 
