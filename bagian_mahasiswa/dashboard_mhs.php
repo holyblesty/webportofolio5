@@ -120,16 +120,6 @@ $nama = $dataNama['nama'];
     </div>
 </div>
 
-<script>
-document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") {
-        fetch("../logout.php", {
-            method: "POST",
-            keepalive: true
-        });
-    }
-});
-</script>
 
 </body>
 </html>
