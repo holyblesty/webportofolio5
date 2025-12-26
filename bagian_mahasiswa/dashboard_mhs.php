@@ -1,4 +1,5 @@
 <?php
+session_set_cookie_params(0);
 session_start();
 include "../koneksi.php";
 
@@ -28,50 +29,80 @@ $nama = $dataNama['nama'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+        body {
+            background:#f9f0f5;
+        }
+
+        /* header pink */
+        .card-header-pink {
+            background:#e11584;
+            color:white;
+        }
+
+        /* menu list (sama dengan dosen) */
+        .list-group-item {
+            border: none;
+            padding: 12px 16px;
+        }
+
+        .list-group-item-action:hover {
+            background:#f8cfe3;
+            color:#7a0044;
+        }
+
+        .logout-item {
+            color:#dc3545;
+        }
+        .logout-item:hover {
+            background:#f8d7da;
+            color:#842029;
+        }
+
+        /* table */
         img.preview {
-            max-width: 80px;
-            border-radius: 6px;
+            max-width:80px;
+            border-radius:6px;
         }
     </style>
 </head>
-<body class="bg-light">
+<body>
 
 <div class="container mt-4">
 
-    <h4 class="mb-3">Halo, <?= htmlspecialchars($nama) ?> 👋</h4>
+    <!-- HEADER -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header card-header-pink">
+            <h4 class="mb-0">Dashboard Mahasiswa</h4>
+        </div>
+        <div class="card-body">
+            <p class="mb-0">
+                Selamat datang, <strong><?= htmlspecialchars($nama) ?></strong>
+            </p>
+        </div>
+    </div>
 
-    <!-- MENU -->
-    <div class="mb-3">
-        <a href="portofolio_detail.php" class="btn btn-primary btn-sm">
+    <!-- MENU (DISAMAIN DENGAN DOSEN) -->
+    <div class="list-group mb-3 shadow-sm">
+        <a href="portofolio_detail.php" class="list-group-item list-group-item-action">
             ➕ Tambah Portofolio
         </a>
-        <a href="lihat_nilai.php" class="btn btn-success btn-sm">
+        <a href="lihat_nilai.php" class="list-group-item list-group-item-action">
             📊 Lihat Nilai
         </a>
-        <a href="ganti_password_mhs.php" class="btn btn-warning btn-sm">
+        <a href="ganti_password_mhs.php" class="list-group-item list-group-item-action">
             🔑 Ganti Password
         </a>
-        <a href="../logout.php" class="btn btn-danger btn-sm">
+        <a href="../logout.php" class="list-group-item list-group-item-action logout-item">
             🚪 Logout
         </a>
     </div>
 
-    <hr>
+    <!-- TABEL PORTOFOLIO -->
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
 
-    <h5 class="mb-3">Kelola Portofolio Saya</h5>
-
-    <?php
-    $q = mysqli_query(
-        $koneksi,
-        "SELECT * FROM portofolio WHERE id_mahasiswa='$id_mahasiswa'"
-    );
-
-    if (mysqli_num_rows($q) == 0) {
-        echo "<div class='alert alert-info'>Belum ada portofolio.</div>";
-    } else {
-    ?>
-        <table class="table table-bordered table-striped align-middle">
-            <thead class="table-secondary text-center">
+        <table class="table table-bordered align-middle mb-0">
+            <thead class="table-danger text-center">
                 <tr>
                     <th width="5%">No</th>
                     <th width="15%">Gambar</th>
@@ -82,81 +113,50 @@ $nama = $dataNama['nama'];
             </thead>
             <tbody>
             <?php
-            $no = 1;
-            while ($p = mysqli_fetch_assoc($q)) {
+            $q = mysqli_query(
+                $koneksi,
+                "SELECT * FROM portofolio WHERE id_mahasiswa='$id_mahasiswa'"
+            );
+
+            if (mysqli_num_rows($q) == 0) {
+                echo "<tr><td colspan='5' class='text-center'>Belum ada portofolio.</td></tr>";
+            } else {
+                $no = 1;
+                while ($p = mysqli_fetch_assoc($q)) {
             ?>
                 <tr>
                     <td class="text-center"><?= $no++ ?></td>
-
-                    <!-- GAMBAR -->
                     <td class="text-center">
-                        <?php if (!empty($p['gambar'])) { ?>
+                        <?php if ($p['gambar']) { ?>
                             <img src="../uploads/<?= htmlspecialchars($p['gambar']) ?>" class="preview">
-                        <?php } else { ?>
-                            -
-                        <?php } ?>
+                        <?php } else { echo "-"; } ?>
                     </td>
-
-                    <!-- JUDUL -->
                     <td><?= htmlspecialchars($p['judul']) ?></td>
-
-                    <!-- REPOSITORY -->
                     <td class="text-center">
-                        <?php if (!empty($p['repo_link'])) { ?>
-                            <a href="<?= htmlspecialchars($p['repo_link']) ?>" target="_blank">
-                                Lihat Repo
-                            </a>
-                        <?php } else { ?>
-                            -
-                        <?php } ?>
+                        <?php if ($p['repo_link']) { ?>
+                            <a href="<?= htmlspecialchars($p['repo_link']) ?>" target="_blank">Repo</a>
+                        <?php } else { echo "-"; } ?>
                     </td>
-
-                    <!-- KELOLA -->
                     <td class="text-center">
                         <a href="portofolio_detail.php?id=<?= $p['id_portofolio'] ?>"
                            class="btn btn-outline-primary btn-sm">
-                            ✏️ Edit
+                           Edit
                         </a>
-
                         <a href="portofolio_detail.php?mode=hapus&id=<?= $p['id_portofolio'] ?>"
-                           onclick="return confirm('Yakin hapus portofolio ini?')"
+                           onclick="return confirm('Hapus portofolio?')"
                            class="btn btn-outline-danger btn-sm">
-                            🗑️ Hapus
+                           Hapus
                         </a>
                     </td>
                 </tr>
-            <?php } ?>
+            <?php }} ?>
             </tbody>
         </table>
-    <?php } ?>
+
+        </div>
+    </div>
 
 </div>
-
-<!-- =========================
-     AUTO LOGOUT SAAT TAB DITUTUP
-     (TIDAK logout saat pindah halaman)
-========================= -->
-<script>
-/*
-  Tandai navigasi internal (klik / submit)
-*/
-document.addEventListener("click", function () {
-    sessionStorage.setItem("pindahHalaman", "ya");
-});
-document.addEventListener("submit", function () {
-    sessionStorage.setItem("pindahHalaman", "ya");
-});
-
-/*
-  Jika tab benar-benar ditutup
-*/
-window.addEventListener("beforeunload", function () {
-    if (!sessionStorage.getItem("pindahHalaman")) {
-        navigator.sendBeacon("../logout.php");
-    }
-    sessionStorage.removeItem("pindahHalaman");
-});
-</script>
 
 </body>
 </html>
