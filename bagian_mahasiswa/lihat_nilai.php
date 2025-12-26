@@ -4,6 +4,7 @@
 // MAHASISWA (SEMESTER 1)
 // ===============================
 
+session_set_cookie_params(0);
 session_start();
 include "../koneksi.php";
 
@@ -35,48 +36,84 @@ $data = mysqli_query($koneksi, $sql);
 <head>
     <meta charset="UTF-8">
     <title>Nilai Proyek</title>
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background:#f9f0f5;
+        }
+        .card-header-pink {
+            background:#e11584;
+            color:white;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 
 <div class="container mt-4">
-    <h3 class="mb-2">Nilai & Catatan Proyek</h3>
-    <p>Mahasiswa: <strong><?= htmlspecialchars($nama_mahasiswa) ?></strong></p>
 
-    <a href="dashboard_mhs.php" class="btn btn-secondary btn-sm mb-3">← Kembali ke Dashboard</a>
+    <!-- HEADER -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header card-header-pink">
+            <h4 class="mb-0">Nilai & Catatan Proyek</h4>
+        </div>
+        <div class="card-body">
+            <p class="mb-0">
+                Mahasiswa: <strong><?= htmlspecialchars($nama_mahasiswa) ?></strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- KEMBALI -->
+    <div class="mb-3">
+        <a href="dashboard_mhs.php" class="btn btn-outline-secondary btn-sm">
+            ← Kembali ke Dashboard
+        </a>
+    </div>
 
 <?php if (mysqli_num_rows($data) == 0) { ?>
 
-    <div class="alert alert-info">Belum ada proyek.</div>
+    <div class="alert alert-info">
+        Belum ada proyek.
+    </div>
 
 <?php } else { ?>
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-primary">
-            <tr>
-                <th>Judul Proyek</th>
-                <th>Nilai</th>
-                <th>Catatan</th>
-                <th>Dosen</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
 
-<?php while ($row = mysqli_fetch_assoc($data)) { ?>
-            <tr>
-                <td><?= htmlspecialchars($row['judul']) ?></td>
-                <td>
-                    <?= $row['nilai'] !== null ? $row['nilai'] : 'Belum dinilai' ?>
-                </td>
-                <td><?= $row['catatan'] ? htmlspecialchars($row['catatan']) : '-' ?></td>
-                <td><?= $row['nama_dosen'] ? htmlspecialchars($row['nama_dosen']) : '-' ?></td>
-            </tr>
+        <table class="table table-bordered align-middle mb-0">
+            <thead class="table-danger text-center">
+                <tr>
+                    <th>Judul Proyek</th>
+                    <th width="15%">Nilai</th>
+                    <th>Catatan</th>
+                    <th width="20%">Dosen</th>
+                </tr>
+            </thead>
+            <tbody>
+
+        <?php while ($row = mysqli_fetch_assoc($data)) { ?>
+                <tr>
+                    <td><?= htmlspecialchars($row['judul']) ?></td>
+                    <td class="text-center">
+                        <?= $row['nilai'] !== null ? $row['nilai'] : 'Belum dinilai' ?>
+                    </td>
+                    <td><?= $row['catatan'] ? htmlspecialchars($row['catatan']) : '-' ?></td>
+                    <td><?= $row['nama_dosen'] ? htmlspecialchars($row['nama_dosen']) : '-' ?></td>
+                </tr>
+        <?php } ?>
+
+            </tbody>
+        </table>
+
+        </div>
+    </div>
+
 <?php } ?>
 
-        </tbody>
-    </table>
-
-<?php } ?>
 </div>
 
 </body>
