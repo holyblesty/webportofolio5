@@ -22,7 +22,7 @@ $nama = $dataNama['nama'];
     <meta charset="UTF-8">
     <title>Portofolio Mahasiswa</title>
 
-    <!-- BOOTSTRAP CDN (AMAN) -->
+    <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- FONT AWESOME -->
@@ -30,10 +30,35 @@ $nama = $dataNama['nama'];
 
     <style>
         body { background:#f9f0f5; padding-top:80px; }
-        .badge-belum { background:#ffe4f3; color:#e11584; }
+
+        .badge-belum  { background:#f8d7da; color:#842029; }
         .badge-tinggi { background:#d4edda; color:#155724; }
         .badge-sedang { background:#fff3cd; color:#856404; }
         .badge-rendah { background:#f8d7da; color:#721c24; }
+
+        /* tombol MERAH (nilai belum ada) */
+        .btn-danger-soft {
+            background-color:#dc3545;
+            border-color:#dc3545;
+            color:white;
+        }
+        .btn-danger-soft:hover {
+            background-color:#bb2d3b;
+            border-color:#bb2d3b;
+            color:white;
+        }
+
+        /* tombol EDIT (pink lembut) */
+        .btn-pink-soft {
+            background-color:#f8cfe3;
+            border-color:#f8cfe3;
+            color:#7a0044;
+        }
+        .btn-pink-soft:hover {
+            background-color:#eeb6d2;
+            border-color:#eeb6d2;
+            color:#7a0044;
+        }
     </style>
 </head>
 <body>
@@ -59,7 +84,7 @@ $nama = $dataNama['nama'];
   <div class="card shadow-sm">
     <div class="card-body p-0">
 
-      <table class="table table-striped mb-0">
+      <table class="table table-striped mb-0 align-middle">
         <thead class="table-dark">
           <tr>
             <th>No</th>
@@ -125,9 +150,17 @@ if (mysqli_num_rows($q) === 0) {
   <td><span class="badge <?= $badge ?>"><?= $nilaiText ?></span></td>
   <td>
     <?php if ($p['nilai'] === null): ?>
-      <a href="beri_nilai.php?id_portofolio=<?= $p['id_portofolio'] ?>" class="btn btn-sm btn-primary">Nilai</a>
+      <!-- BELUM DINILAI → MERAH -->
+      <a href="proses_nilai.php?id_portofolio=<?= $p['id_portofolio'] ?>"
+         class="btn btn-sm btn-danger-soft">
+         Nilai
+      </a>
     <?php else: ?>
-      <a href="edit_nilai.php?id_portofolio=<?= $p['id_portofolio'] ?>" class="btn btn-sm btn-warning">Edit</a>
+      <!-- SUDAH DINILAI → EDIT PINK -->
+      <a href="proses_nilai.php?id_portofolio=<?= $p['id_portofolio'] ?>"
+         class="btn btn-sm btn-pink-soft">
+         Edit
+      </a>
     <?php endif; ?>
   </td>
 </tr>
