@@ -26,15 +26,49 @@ $nama = $data['nama'];
 
     <!-- Bootstrap (aman semester 1) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background:#f9f0f5;
+        }
+
+        /* header card */
+        .card-header-pink {
+            background:#e11584;
+            color:white;
+        }
+
+        /* menu list */
+        .list-group-item {
+            border: none;
+            padding: 12px 16px;
+        }
+
+        .list-group-item-action:hover {
+            background:#f8cfe3;
+            color:#7a0044;
+        }
+
+        /* logout merah lembut */
+        .logout-item {
+            color:#dc3545;
+        }
+        .logout-item:hover {
+            background:#f8d7da;
+            color:#842029;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 
 <div class="container mt-4">
 
     <!-- HEADER -->
-    <div class="card mb-3">
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header card-header-pink">
+            <h4 class="mb-0">Dashboard Dosen</h4>
+        </div>
         <div class="card-body">
-            <h4 class="mb-1">Dashboard Dosen</h4>
             <p class="mb-0">
                 Selamat datang, <strong><?= htmlspecialchars($nama) ?></strong>
             </p>
@@ -42,53 +76,24 @@ $nama = $data['nama'];
     </div>
 
     <!-- MENU -->
-    <div class="list-group mb-3">
-        <a href="dashboard_dsn.php" class="list-group-item list-group-item-action">
-            🏠 Dashboard
-        </a>
+    <div class="list-group mb-3 shadow-sm">
         <a href="portofolio_dsn.php" class="list-group-item list-group-item-action">
             📁 Portofolio Mahasiswa
         </a>
         <a href="ganti_password_dsn.php" class="list-group-item list-group-item-action">
             🔑 Ganti Password
         </a>
-        <a href="../logout.php" class="list-group-item list-group-item-action text-danger">
+        <a href="../logout.php" class="list-group-item list-group-item-action logout-item">
             🚪 Logout
         </a>
     </div>
 
     <!-- INFO -->
-    <div class="alert alert-info">
+    <div class="alert alert-light border">
         Silakan pilih menu di atas untuk melanjutkan.
     </div>
 
 </div>
-
-<!-- =========================
-     AUTO LOGOUT SAAT TAB DITUTUP
-     (TIDAK logout saat pindah halaman)
-========================= -->
-<script>
-/*
-  Tandai navigasi internal (klik / submit)
-*/
-document.addEventListener("click", function () {
-    sessionStorage.setItem("pindahHalaman", "ya");
-});
-document.addEventListener("submit", function () {
-    sessionStorage.setItem("pindahHalaman", "ya");
-});
-
-/*
-  Jika tab / window benar-benar ditutup
-*/
-window.addEventListener("beforeunload", function () {
-    if (!sessionStorage.getItem("pindahHalaman")) {
-        navigator.sendBeacon("../logout.php");
-    }
-    sessionStorage.removeItem("pindahHalaman");
-});
-</script>
 
 </body>
 </html>
