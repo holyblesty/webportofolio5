@@ -1,22 +1,37 @@
 <?php
+/*
+  Nama File   : dashboard_dsn.php
+  Deskripsi   : Halaman dashboard dosen untuk mengelola menu utama
+  Pembuat    : Vivian Sarah Diva Alisianoi & Jesina Holyblesty Simatupang
+  Tanggal    : 26 Desember 2025
+*/
+
+// session hanya aktif selama browser terbuka
+session_set_cookie_params(0);
+// memulai session
 session_start();
+// memanggil koneksi database
 include "../koneksi.php";
 
-// cek login dosen
+// cek apakah dosen sudah login
 if (!isset($_SESSION['id_dosen']) || $_SESSION['role'] !== 'dosen') {
+    // jika belum login, kembali ke halaman index
     header("Location: ../index.php");
     exit;
 }
 
-$id_dosen = $_SESSION['id_dosen'];
+// mengambil id dosen dari session
+$idDosen = $_SESSION['id_dosen'];
 
-// ambil nama dosen
-$q = mysqli_query(
+// query untuk mengambil nama dosen
+$queryNama = mysqli_query(
     $koneksi,
-    "SELECT nama FROM dosen WHERE id_dosen='$id_dosen'"
+    "SELECT nama FROM dosen WHERE id_dosen='$idDosen'"
 );
-$data = mysqli_fetch_assoc($q);
-$nama = $data['nama'];
+// mengambil hasil query dalam bentuk array
+$dataNama = mysqli_fetch_assoc($queryNama);
+// menyimpan nama dosen
+$nama = $dataNama['nama'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -24,38 +39,42 @@ $nama = $data['nama'];
     <meta charset="UTF-8">
     <title>Dashboard Dosen</title>
 
-    <!-- Bootstrap (aman semester 1) -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+        /* warna latar belakang halaman */
         body {
-            background:#f9f0f5;
+            background: #f9f0f5;
         }
 
-        /* header card */
+        /* header dashboard */
         .card-header-pink {
-            background:#e11584;
-            color:white;
+            background: #e11584;
+            color: white;
         }
 
-        /* menu list */
+        /* item menu */
         .list-group-item {
             border: none;
             padding: 12px 16px;
         }
 
+        /* efek hover menu */
         .list-group-item-action:hover {
-            background:#f8cfe3;
-            color:#7a0044;
+            background: #f8cfe3;
+            color: #7a0044;
         }
 
-        /* logout merah lembut */
+        /* warna khusus tombol logout */
         .logout-item {
-            color:#dc3545;
+            color: #dc3545;
         }
+
+        /* hover tombol logout */
         .logout-item:hover {
-            background:#f8d7da;
-            color:#842029;
+            background: #f8d7da;
+            color: #842029;
         }
     </style>
 </head>
@@ -63,32 +82,36 @@ $nama = $data['nama'];
 
 <div class="container mt-4">
 
-    <!-- HEADER -->
+    <!-- card header -->
     <div class="card mb-3 shadow-sm">
         <div class="card-header card-header-pink">
             <h4 class="mb-0">Dashboard Dosen</h4>
         </div>
         <div class="card-body">
             <p class="mb-0">
+                <!-- menampilkan nama dosen -->
                 Selamat datang, <strong><?= htmlspecialchars($nama) ?></strong>
             </p>
         </div>
     </div>
 
-    <!-- MENU -->
+    <!-- menu navigasi dosen -->
     <div class="list-group mb-3 shadow-sm">
+        <!-- menu portofolio mahasiswa -->
         <a href="portofolio_dsn.php" class="list-group-item list-group-item-action">
             📁 Portofolio Mahasiswa
         </a>
+        <!-- menu ganti password -->
         <a href="ganti_password_dsn.php" class="list-group-item list-group-item-action">
             🔑 Ganti Password
         </a>
+        <!-- menu logout -->
         <a href="../logout.php" class="list-group-item list-group-item-action logout-item">
             🚪 Logout
         </a>
     </div>
 
-    <!-- INFO -->
+    <!-- informasi tambahan -->
     <div class="alert alert-light border">
         Silakan pilih menu di atas untuk melanjutkan.
     </div>
