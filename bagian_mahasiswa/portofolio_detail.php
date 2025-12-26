@@ -133,52 +133,91 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title><?= $edit ? "Edit" : "Tambah" ?> Portofolio</title>
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background:#f9f0f5;
+        }
+        .card-header-pink {
+            background:#e11584;
+            color:white;
+        }
+        .btn-pink {
+            background:#e11584;
+            border-color:#e11584;
+            color:white;
+        }
+        .btn-pink:hover {
+            background:#c5116f;
+            border-color:#c5116f;
+            color:white;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
 
-<div class="container mt-4">
+<div class="container mt-4" style="max-width:650px;">
 
-<h4><?= $edit ? "Edit" : "Tambah" ?> Portofolio</h4>
+<div class="card shadow-sm">
+    <div class="card-header card-header-pink">
+        <h5 class="mb-0">
+            <?= $edit ? "Edit Portofolio" : "Tambah Portofolio" ?>
+        </h5>
+    </div>
 
-<form method="POST" enctype="multipart/form-data">
+    <div class="card-body">
 
-<?php if ($edit): ?>
-    <input type="hidden" name="id_portofolio" value="<?= $data['id_portofolio'] ?>">
-    <input type="hidden" name="gambar_lama" value="<?= $data['gambar'] ?>">
-<?php endif; ?>
+        <form method="POST" enctype="multipart/form-data">
 
-<div class="mb-2">
-    <label>Judul</label>
-    <input type="text" name="judul" class="form-control"
-           value="<?= $edit ? htmlspecialchars($data['judul']) : '' ?>" required>
+        <?php if ($edit): ?>
+            <input type="hidden" name="id_portofolio" value="<?= $data['id_portofolio'] ?>">
+            <input type="hidden" name="gambar_lama" value="<?= $data['gambar'] ?>">
+        <?php endif; ?>
+
+        <div class="mb-3">
+            <label class="form-label">Judul</label>
+            <input type="text" name="judul" class="form-control"
+                   value="<?= $edit ? htmlspecialchars($data['judul']) : '' ?>" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Deskripsi</label>
+            <textarea name="deskripsi" class="form-control" rows="4" required><?= 
+                $edit ? htmlspecialchars($data['deskripsi']) : '' ?></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Gambar</label>
+            <input type="file" name="gambar" class="form-control">
+        </div>
+
+        <?php if ($edit && $data['gambar'] != ""): ?>
+            <img src="../uploads/<?= $data['gambar'] ?>" width="200" class="mb-3 rounded">
+        <?php endif; ?>
+
+        <div class="mb-3">
+            <label class="form-label">Link Repository</label>
+            <input type="text" name="repo_link" class="form-control"
+                   value="<?= $edit ? htmlspecialchars($data['repo_link']) : '' ?>">
+        </div>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-pink flex-fill">
+                <?= $edit ? "Update" : "Simpan" ?>
+            </button>
+            <a href="dashboard_mhs.php" class="btn btn-secondary flex-fill">
+                Batal
+            </a>
+        </div>
+
+        </form>
+
+    </div>
 </div>
 
-<div class="mb-2">
-    <label>Deskripsi</label>
-    <textarea name="deskripsi" class="form-control" required><?= 
-        $edit ? htmlspecialchars($data['deskripsi']) : '' ?></textarea>
-</div>
-
-<div class="mb-2">
-    <label>Gambar</label>
-    <input type="file" name="gambar" class="form-control">
-</div>
-
-<?php if ($edit && $data['gambar'] != ""): ?>
-    <img src="../uploads/<?= $data['gambar'] ?>" width="200" class="mb-2">
-<?php endif; ?>
-
-<div class="mb-2">
-    <label>Link Repository</label>
-    <input type="text" name="repo_link" class="form-control"
-           value="<?= $edit ? htmlspecialchars($data['repo_link']) : '' ?>">
-</div>
-
-<button class="btn btn-primary"><?= $edit ? "Update" : "Simpan" ?></button>
-<a href="dashboard_mhs.php" class="btn btn-secondary">Batal</a>
-
-</form>
 </div>
 
 </body>
