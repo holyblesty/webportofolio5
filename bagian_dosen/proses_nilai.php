@@ -90,48 +90,83 @@ $nilaiData = mysqli_fetch_assoc($qNilai);
 <head>
     <meta charset="UTF-8">
     <title><?= $nilaiData ? "Edit Nilai" : "Beri Nilai" ?></title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background:#f9f0f5;
+        }
+        .bg-pink {
+            background:#e11584;
+            color:white;
+        }
+        .btn-pink {
+            background:#e11584;
+            border-color:#e11584;
+            color:white;
+        }
+        .btn-pink:hover {
+            background:#c5116f;
+            border-color:#c5116f;
+            color:white;
+        }
+        a.back-link {
+            color:#e11584;
+            text-decoration:none;
+        }
+        a.back-link:hover {
+            text-decoration:underline;
+        }
+    </style>
 </head>
-<body class="bg-light">
+
+<body>
 
 <div class="container mt-5" style="max-width:600px;">
     <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
+
+        <!-- HEADER -->
+        <div class="card-header bg-pink">
             <?= $nilaiData ? "Edit Nilai Portofolio" : "Beri Nilai Portofolio" ?>
         </div>
+
         <div class="card-body">
 
             <form method="POST">
                 <input type="hidden" name="id_portofolio" value="<?= $portofolio['id_portofolio'] ?>">
 
                 <div class="mb-3">
-                    <label>Nama Mahasiswa</label>
+                    <label class="form-label">Nama Mahasiswa</label>
                     <input type="text" class="form-control" value="<?= htmlspecialchars($portofolio['nama']) ?>" readonly>
                 </div>
 
                 <div class="mb-3">
-                    <label>Judul Proyek</label>
+                    <label class="form-label">Judul Proyek</label>
                     <input type="text" class="form-control" value="<?= htmlspecialchars($portofolio['judul']) ?>" readonly>
                 </div>
 
                 <div class="mb-3">
-                    <label>Nilai (0–100)</label>
+                    <label class="form-label">Nilai (0–100)</label>
                     <input type="number" name="nilai" class="form-control" min="0" max="100"
                            value="<?= $nilaiData['nilai'] ?? '' ?>" required>
                 </div>
 
                 <div class="mb-3">
-                    <label>Catatan</label>
+                    <label class="form-label">Catatan</label>
                     <textarea name="catatan" class="form-control" rows="4"><?= $nilaiData['catatan'] ?? '' ?></textarea>
                 </div>
 
-                <button class="btn btn-primary w-100">
+                <button class="btn btn-pink w-100">
                     <?= $nilaiData ? "Perbarui Nilai" : "Simpan Nilai" ?>
                 </button>
             </form>
 
             <div class="text-center mt-3">
-                <a href="portofolio_dsn.php">← Kembali ke Portofolio</a>
+                <a href="portofolio_dsn.php" class="back-link">
+                    ← Kembali ke Portofolio
+                </a>
             </div>
 
         </div>
