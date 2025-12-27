@@ -187,7 +187,7 @@ $nilaiData = mysqli_fetch_assoc($queryNilai);
 
         <!-- header halaman -->
         <div class="card-header bg-pink">
-            <?= $nilaiData ? "Edit Nilai Portofolio" : "Beri Nilai Portofolio" ?>
+            <?= $nilaiData ? "Edit Nilai Proyek" : "Beri Nilai Proyek" ?>
         </div>
 
         <div class="card-body">
