@@ -1,6 +1,17 @@
 <?php
+/* =========================================================
+   Nama File : index.php
+   Deskripsi : Halaman utama website portofolio projek PBL
+   Pembuat   : Vivian Sarah Diva Alisianoi
+               Jesina Holyblesty Simatupang
+   Tanggal   : 26 Desember 2025
+========================================================= */
+
 session_start();
 
+/* =========================
+   CEK STATUS LOGIN
+========================= */
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] === 'dosen') {
         header("Location: bagian_dosen/dashboard_dsn.php");
@@ -15,193 +26,307 @@ if (isset($_SESSION['role'])) {
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Web Portofolio Projek PBL</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Web Portofolio Projek PBL</title>
 
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- =========================
+         BOOTSTRAP & FONT
+    ========================= -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      background:white; font-family:'Poppins',sans-serif; color:#000;
-      padding-top:70px; overflow-x:hidden;
-    }
+    <style>
+        /* =========================
+           SETUP LAYOUT & FOOTER
+           (FOOTER NGIKUT HALAMAN)
+        ========================= */
+        html, body {
+            height: 100%;
+        }
 
-    /* ==== NAVBAR ==== */
-    .navbar {background:#FD5DA8; transition:.3s;}
-    .navbar.transparent {background:rgba(253,93,168,.3);}
-    .navbar .nav-link.active {
-      background:rgba(208,65,144,.3);
-      border-radius:10px; color:#e11584 !important;
-    }
+        body {
+            background: white;
+            font-family: 'Poppins', sans-serif;
+            color: #000;
+            padding-top: 70px;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
 
-    /* ==== DROPDOWN PINK ==== */
-    .dropdown-menu {
-      width: 400px;
-      background: rgba(254,197,229,0.85);
-      border-radius: 12px;
-      padding: 10px;
-      border: none;
-      backdrop-filter: blur(6px);
-    }
-    .dropdown-item {
-      font-weight: 600; color: #d63384;
-      border-radius: 12px; margin-bottom: 10px;
-      transition:.25s;
-      text-align:center;
-    }
-    .dropdown-item:hover {
-      background: rgba(222,100,169,0.7);
-      color:white;
-    }
+        .main-content {
+            flex: 1;
+        }
 
-    /* ==== FOTO BULAT ==== */
-    .circle-img {
-      width:500px; height:500px; border-radius:70%;
-      background:url(FOTOPEMBUATWEBSITE.JPG.jpeg) center/cover;
-      border:5px solid #fff;
-    }
+        /* =========================
+           NAVBAR
+        ========================= */
+        .navbar {
+            background: #FD5DA8;
+            transition: .3s;
+        }
 
-    /* ==== KOTAK KONTEN ==== */
-    .content-box {
-      background:#fec5e5; padding:30px; border-radius:12px;
-      box-shadow:0 3px 10px rgba(0,0,0,.1);
-      transition:.3s; margin-bottom:20px;
-    }
-    .content-box:hover {transform:translateY(-4px);}
+        .navbar .nav-link.active {
+            background: rgba(208,65,144,.3);
+            border-radius: 10px;
+            color: #e11584 !important;
+        }
 
-    /* ==== PARAGRAF ==== */
-    .paragraph-section p {
-      text-align:justify; text-indent:40px; line-height:1.8; font-size:16px;
-    }
+        /* =========================
+           DROPDOWN MENU
+        ========================= */
+        .dropdown-menu {
+            width: 400px;
+            background: rgba(254,197,229,0.85);
+            border-radius: 12px;
+            padding: 10px;
+            border: none;
+            backdrop-filter: blur(6px);
+        }
 
-    /* ==== CAROUSEL ==== */
-    #carouselPBL img {height:380px; object-fit:cover;}
-    .custom-caption {
-      background:rgba(255,182,193,.8);
-      border-radius:12px; padding:6px 12px; color:#000;
-    }
+        .dropdown-item {
+            font-weight: 600;
+            color: #d63384;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
 
-    /* ==== QUOTE ==== */
-    .quote {
-      background:#fec5e5; border-radius:12px;
-      text-align:center; padding:18px;
-      font-style:italic; color:#e11584;
-      animation:fadeIn 1s ease;
-    }
-    .quote::after {content:"🌸 🌷 🌸"; display:block; margin-top:6px;}
+        .dropdown-item:hover {
+            background: rgba(222,100,169,0.7);
+            color: white;
+        }
 
-    @keyframes fadeIn {from{opacity:.2;} to{opacity:1;}}
-    .fade-up {opacity:0; transform:translateY(30px); transition:.7s;}
-    .fade-up.show {opacity:1; transform:translateY(0);}
+        /* =========================
+           FOTO PROFIL BULAT
+        ========================= */
+        .circle-img {
+            width: 500px;
+            height: 500px;
+            border-radius: 70%;
+            background: url(FOTOPEMBUATWEBSITE.JPG.jpeg) center/cover;
+            border: 5px solid #fff;
+        }
 
-    /* ==== LOGIN ==== */
-    .modal-header {background:#e11584; color:#fff;}
-    .btn-pink {background:#e11584; color:white; border:none; transition:.25s;}
-    .btn-pink:hover {background:#d10b73;}
+        /* =========================
+           KONTEN BOX
+        ========================= */
+        .content-box {
+            background: #fec5e5;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,.1);
+            margin-bottom: 20px;
+            transition: .3s;
+        }
 
-    input.form-control {
-      border:1.5px solid #ffb6c1; border-radius:10px;
-    }
-    input.form-control:focus {
-      box-shadow:0 0 5px rgba(255,105,180,.6);
-      border-color:#ff69b4;
-    }
+        .content-box:hover {
+            transform: translateY(-4px);
+        }
 
-    /* MOBILE */
-    @media(max-width:768px){
-      .circle-img{width:300px;height:300px;}
-      #carouselPBL img {height:230px;}
-      .dropdown-menu{width:90vw;}
+        /* =========================
+           PARAGRAF
+        ========================= */
+        .paragraph-section p {
+            text-align: justify;
+            text-indent: 40px;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* =========================
+           CAROUSEL
+        ========================= */
+        #carouselPBL img {
+            height: 380px;
+            object-fit: cover;
+        }
+
+        .custom-caption {
+            background: rgba(255,182,193,.8);
+            border-radius: 12px;
+            padding: 6px 12px;
+            color: #000;
+        }
+
+        /* =========================
+           LOGIN BUTTON & FORM
+        ========================= */
+        .modal-header {
+            background: #e11584;
+            color: #fff;
+        }
+
+        .btn-pink {
+            background: #e11584;
+            color: white;
+            border: none;
+            transition: .25s;
+        }
+
+        .btn-pink:hover {
+            background: #d10b73;
+        }
+
+        input.form-control {
+            border: 1.5px solid #ffb6c1;
+            border-radius: 10px;
+        }
+
+        input.form-control:focus {
+            box-shadow: 0 0 5px rgba(255,105,180,.6);
+            border-color: #ff69b4;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+        @media(max-width:768px){
+            .circle-img {
+                width: 300px;
+                height: 300px;
+            }
+            #carouselPBL img {
+                height: 230px;
+            }
+            .dropdown-menu {
+                width: 90vw;
+            }
+        }
+        /* ==== FOOTER ==== */
+    footer {
+      margin-top:auto;
     }
-  </style>
+    </style>
 </head>
+
 <body>
 
-<!-- ========================= NAVBAR ========================= -->
+<!-- =========================
+     NAVBAR
+========================= -->
 <nav class="navbar navbar-expand-lg fixed-top">
-  <div class="container">
-    <a class="navbar-brand fw-bold text-white">WEB PORTOFOLIO PROJEK PBL</a>
+    <div class="container">
+        <a class="navbar-brand fw-bold text-white">WEB PORTOFOLIO PROJEK PBL</a>
 
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse justify-content-end" id="nav">
-      <ul class="navbar-nav">
+        <div class="collapse navbar-collapse justify-content-end" id="nav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="index.php">BERANDA</a>
+                </li>
 
-        <li class="nav-item">
-          <a class="nav-link active text-white" href="index.php">BERANDA</a>
-        </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown">
+                        KUMPULAN PROJEK PBL
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="buku-tamu-tata-usaha.html">BUKU TAMU TATA USAHA</a></li>
+                        <li><a class="dropdown-item" href="pengelolaan-rapat.html">PENGELOLAAN RAPAT</a></li>
+                        <li><a class="dropdown-item" href="pencatatan-notulen.html">PENCATATAN NOTULEN</a></li>
+                        <li><a class="dropdown-item" href="pengelolaan-surat-peringatan-sp.html">PENGELOLAAN SURAT PERINGATAN SP</a></li>
+                        <li><a class="dropdown-item" href="jadwal-perkuliahan-mahasiswa-pribadi.html">JADWAL PERKULIAHAN MAHASISWA PRIBADI</a></li>
+                        <li><a class="dropdown-item" href="web-informasi-event-kampus.html">WEB INFORMASI EVENT KAMPUS</a></li>
+                        <li><a class="dropdown-item" href="aplikasi-pengumuman-akademik-online.html">APLIKASI PENGUMUMAN AKADEMIK ONLINE</a></li>
+                    </ul>
+                </li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown">KUMPULAN PROJEK PBL</a>
-
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="buku-tamu-tata-usaha.html">BUKU TAMU TATA USAHA (TU)</a></li>
-            <li><a class="dropdown-item" href="pengelolaan-rapat.html">PENGELOLAAN RAPAT</a></li>
-            <li><a class="dropdown-item" href="pencatatan-notulen.html">PENCATATAN NOTULEN</a></li>
-            <li><a class="dropdown-item" href="pengelolaan-surat-peringatan-sp.html">PENGELOLAAN SURAT PERINGATAN SP</a></li>
-            <li><a class="dropdown-item" href="jadwal-perkuliahan-mahasiswa-pribadi.html">JADWAL PERKULIAHAN MAHASISWA</a></li>
-            <li><a class="dropdown-item" href="web-informasi-event-kampus.html">WEB INFORMASI EVENT KAMPUS</a></li>
-            <li><a class="dropdown-item" href="aplikasi-pengumuman-akademik-online.html">APLIKASI PENGUMUMAN AKADEMIK ONLINE</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item ms-3">
-          <button id="loginBtn" class="btn btn-pink px-3 fw-semibold">LOGIN</button>
-        </li>
-      </ul>
+                <li class="nav-item ms-3">
+                    <button id="loginBtn" class="btn btn-pink px-3 fw-semibold">LOGIN</button>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
 
-<!-- ========================= MODAL LOGIN PILIHAN ========================= -->
-<div class="modal fade" id="loginModal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content rounded-4">
-      <div class="modal-header rounded-top-4">
-        <h5 class="modal-title w-100 text-center">Pilih Jenis Login</h5>
-      </div>
+<!-- =========================
+     MODAL PILIH LOGIN
+========================= -->
+<div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4">
 
-      <div class="modal-body text-center p-4">
-        <p class="mb-3">Silakan pilih jenis login 💖</p>
+            <div class="modal-header">
+                <h5 class="modal-title w-100 text-center">
+                    Pilih Jenis Login
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
 
-        <button id="btnLoginDosen" class="btn btn-pink w-100 mb-2 py-2">Login Dosen</button>
-        <button id="btnLoginMahasiswa" class="btn btn-pink w-100 py-2">Login Mahasiswa</button>
-      </div>
+            <div class="modal-body text-center p-4">
+                <p class="mb-3">Silakan pilih jenis login 💖</p>
+
+                <button id="btnLoginDosen"
+                        type="button"
+                        class="btn btn-pink w-100 mb-2 py-2">
+                    Login Dosen
+                </button>
+
+                <button id="btnLoginMahasiswa"
+                        type="button"
+                        class="btn btn-pink w-100 py-2">
+                    Login Mahasiswa
+                </button>
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>
 
-<!-- ========================= MODAL LOGIN FORM ========================= -->
-<div class="modal fade" id="formLoginModal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content rounded-4">
-      <div class="modal-header rounded-top-4" id="loginHeader">
-        <h5 class="modal-title w-100 text-center" id="formLoginModalLabel">Login</h5>
-      </div>
+<!-- =========================
+     MODAL FORM LOGIN
+========================= -->
+<div class="modal fade" id="formLoginModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4">
 
-      <div class="modal-body p-4">
-        <form method="POST" action="login_proses.php" id="popupLoginForm">
-          <input type="hidden" name="role" id="role">
+            <div class="modal-header" id="loginHeader">
+                <h5 class="modal-title w-100 text-center"
+                    id="formLoginModalLabel">
+                    Login
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
 
-          <label class="fw-semibold">Username</label>
-          <input type="text" name="username" class="form-control mb-3" required>
+            <div class="modal-body p-4">
+                <form method="POST" action="login_proses.php">
 
-          <label class="fw-semibold">Password</label>
-          <input type="password" name="password" class="form-control mb-3" required>
+                    <input type="hidden" name="role" id="role">
 
-          <button class="btn btn-pink w-100 py-2 fw-semibold">Login 💖</button>
-        </form>
-      </div>
+                    <label class="fw-semibold">Username</label>
+                    <input type="text"
+                           name="username"
+                           class="form-control mb-3"
+                           required>
+
+                    <label class="fw-semibold">Password</label>
+                    <input type="password"
+                           name="password"
+                           class="form-control mb-3"
+                           required>
+
+                    <button type="submit"
+                            class="btn btn-pink w-100 py-2 fw-semibold">
+                        Login 💖
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>
 
-<!-- ========================= KONTEN UTAMA ========================= -->
-<div class="container mt-4">
+
+<!-- =========================
+     KONTEN UTAMA
+========================= -->
+<div class="main-content">
+    <div class="container mt-4">
   <div class="row">
 
     <!-- KIRI -->
@@ -303,7 +428,7 @@ if (isset($_SESSION['role'])) {
 </div>
 
 <!-- ========================= CONTACT ========================= -->
-<div class="mt-5 text-center">
+<div class="mt-5 mb-4 text-center">
   <h5 class="fw-bold text-danger">CONTACT US</h5>
 
   <div class="contact-box mt-3">
@@ -312,33 +437,41 @@ if (isset($_SESSION['role'])) {
   </div>
 </div>
 
-<!-- ========================= FOOTER ========================= -->
-<footer class="text-center text-white py-3 mt-5" style="background:#FD5DA8;">
-  © 2025 Projek PBL | All Rights Reserved
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="text-center text-white py-3" style="background:#FD5DA8;">
+    © 2025 Projek PBL | All Rights Reserved
 </footer>
 
+<!-- =========================
+     BOOTSTRAP JS
+========================= -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
+<!-- =========================
+     SCRIPT LOGIN MODAL
+========================= -->
 <script>
+    const modalPick = new bootstrap.Modal('#loginModal');
+    const modalForm = new bootstrap.Modal('#formLoginModal');
 
-/* LOGIN */
-const modalPick = new bootstrap.Modal('#loginModal');
-const modalForm = new bootstrap.Modal('#formLoginModal');
+    document.getElementById("loginBtn").onclick = () => modalPick.show();
 
-document.getElementById("loginBtn").onclick=()=>modalPick.show();
+    document.getElementById("btnLoginDosen").onclick = () => {
+        document.getElementById("role").value = "dosen";
+        document.getElementById("formLoginModalLabel").textContent = "Login Dosen";
+        modalForm.show();
+        modalPick.hide();
+    };
 
-document.getElementById("btnLoginDosen").onclick=()=>{
-  document.getElementById("role").value="dosen";
-  document.getElementById("formLoginModalLabel").textContent="Login Dosen";
-  modalForm.show(); modalPick.hide();
-};
-
-document.getElementById("btnLoginMahasiswa").onclick=()=>{
-  document.getElementById("role").value="mahasiswa";
-  document.getElementById("formLoginModalLabel").textContent="Login Mahasiswa";
-  modalForm.show(); modalPick.hide();
-};
+    document.getElementById("btnLoginMahasiswa").onclick = () => {
+        document.getElementById("role").value = "mahasiswa";
+        document.getElementById("formLoginModalLabel").textContent = "Login Mahasiswa";
+        modalForm.show();
+        modalPick.hide();
+    };
 </script>
 
 </body>
