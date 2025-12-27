@@ -232,7 +232,7 @@ if (mysqli_num_rows($queryPortofolio) == 0) {
                                     href="<?= htmlspecialchars($p['repo_link']) ?>"
                                     target="_blank"
                                 >
-                                    Repo
+                                    Link
                                 </a>
                             <?php } else { ?>
                                 -
