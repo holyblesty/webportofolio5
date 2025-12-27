@@ -180,10 +180,10 @@ $nama = $dataNama['nama'];
             <table class="table table-striped table-bordered align-middle mb-0">
 
                 <!-- header tabel -->
-                <thead class="table-dark">
+                <thead class="table-dark text-center">
                     <tr>
                         <th>No</th>
-                        <th>Mahasiswa</th>
+                        <th>Nama Mahasiswa</th>
                         <th>Judul</th>
                         <th>Deskripsi</th>
                         <th>Repo</th>
