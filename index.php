@@ -64,7 +64,6 @@ if (isset($_SESSION['role'])) {
         ========================= */
         .navbar {
             background: #FD5DA8;
-            transition: .3s;
         }
 
         .navbar .nav-link.active {
@@ -144,7 +143,7 @@ if (isset($_SESSION['role'])) {
         }
 
         .custom-caption {
-            background: rgba(255,182,193,.8);
+            background: #FFB6C1CC;
             border-radius: 12px;
             padding: 6px 12px;
             color: #000;
@@ -210,14 +209,14 @@ if (isset($_SESSION['role'])) {
     <div class="container">
         <a class="navbar-brand fw-bold text-white">WEB PORTOFOLIO PROJEK PBL</a>
 
-        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse justify-content-end" id="nav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active text-white" href="index.php">BERANDA</a>
+                    <a class="nav-link active" href="index.php">BERANDA</a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -345,7 +344,7 @@ if (isset($_SESSION['role'])) {
         <p class="fw-bold fs-3">POLITEKNIK NEGERI BATAM</p>
       </div>
 
-      <div class="content-box quote">
+      <div class="content-box">
         "Setiap proyek kecil membawa langkah besar menuju impian."
       </div>
     </div>
