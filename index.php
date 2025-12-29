@@ -223,7 +223,7 @@ if (isset($_SESSION['role'])) {
                     <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown">
                         KUMPULAN PROJEK PBL
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="buku-tamu-tata-usaha.html">BUKU TAMU TATA USAHA</a></li>
                         <li><a class="dropdown-item" href="pengelolaan-rapat.html">PENGELOLAAN RAPAT</a></li>
                         <li><a class="dropdown-item" href="pencatatan-notulen.html">PENCATATAN NOTULEN</a></li>
@@ -449,9 +449,7 @@ if (isset($_SESSION['role'])) {
 ========================= -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- =========================
-     SCRIPT LOGIN MODAL
-========================= -->
+<!-- Script pengaturan login modal -->
 <script>
     const modalPick = new bootstrap.Modal('#loginModal');
     const modalForm = new bootstrap.Modal('#formLoginModal');
