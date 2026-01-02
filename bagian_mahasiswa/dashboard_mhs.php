@@ -6,43 +6,29 @@
   Tanggal    : 26 Desember 2025
 */
 
-// session hanya aktif selama browser terbuka
 session_set_cookie_params(0);
-
-// memulai session
 session_start();
 
-// memanggil koneksi database
 include "../koneksi.php";
 
-// =========================
-// CEK LOGIN MAHASISWA
-// =========================
-
-// memastikan user sudah login sebagai mahasiswa
+/* =========================
+   CEK LOGIN MAHASISWA
+========================= */
 if (!isset($_SESSION['id_mahasiswa']) || $_SESSION['role'] !== 'mahasiswa') {
-    // jika belum login atau role bukan mahasiswa
     header("Location: ../index.php");
     exit;
 }
 
-// mengambil id mahasiswa dari session
 $idMahasiswa = $_SESSION['id_mahasiswa'];
 
-// =========================
-// AMBIL DATA MAHASISWA
-// =========================
-
-// query untuk mengambil nama mahasiswa
+/* =========================
+   AMBIL DATA MAHASISWA
+========================= */
 $queryNama = mysqli_query(
     $koneksi,
     "SELECT nama FROM mahasiswa WHERE id_mahasiswa='$idMahasiswa'"
 );
-
-// mengambil hasil query
 $dataNama = mysqli_fetch_assoc($queryNama);
-
-// menyimpan nama mahasiswa
 $nama = $dataNama['nama'];
 ?>
 <!DOCTYPE html>
@@ -51,7 +37,6 @@ $nama = $dataNama['nama'];
     <meta charset="UTF-8">
     <title>Dashboard Mahasiswa</title>
 
-    <!-- Bootstrap CSS -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -60,16 +45,16 @@ $nama = $dataNama['nama'];
     <style>
         /* latar belakang halaman */
         body {
-            background: #f9f0f5;
+            background: #f4f7ff;
         }
 
         /* header dashboard */
-        .card-header-pink {
-            background: #e11584;
+        .card-header-blue {
+            background: #0041C2;
             color: white;
         }
 
-        /* menu list (disamakan dengan dashboard dosen) */
+        /* menu list */
         .list-group-item {
             border: none;
             padding: 12px 16px;
@@ -77,8 +62,8 @@ $nama = $dataNama['nama'];
 
         /* hover menu */
         .list-group-item-action:hover {
-            background: #f8cfe3;
-            color: #7a0044;
+            background: #e7efff;
+            color: #0041C2;
         }
 
         /* tombol logout */
@@ -91,7 +76,7 @@ $nama = $dataNama['nama'];
             color: #842029;
         }
 
-        /* preview gambar portofolio */
+        /* preview gambar */
         img.preview {
             max-width: 80px;
             border-radius: 6px;
@@ -102,11 +87,9 @@ $nama = $dataNama['nama'];
 
 <div class="container mt-4">
 
-    <!-- =========================
-         HEADER DASHBOARD
-    ========================= -->
+    <!-- HEADER DASHBOARD -->
     <div class="card mb-3 shadow-sm">
-        <div class="card-header card-header-pink">
+        <div class="card-header card-header-blue">
             <h4 class="mb-0">Dashboard Mahasiswa</h4>
         </div>
         <div class="card-body">
@@ -117,55 +100,34 @@ $nama = $dataNama['nama'];
         </div>
     </div>
 
-    <!-- =========================
-         MENU DASHBOARD
-    ========================= -->
+    <!-- MENU DASHBOARD -->
     <div class="list-group mb-3 shadow-sm">
 
-        <!-- menu tambah portofolio -->
-        <a
-            href="portofolio_detail.php"
-            class="list-group-item list-group-item-action"
-        >
+        <a href="portofolio_detail.php" class="list-group-item list-group-item-action">
             ➕ Tambah Portofolio
         </a>
 
-        <!-- menu lihat nilai -->
-        <a
-            href="lihat_nilai.php"
-            class="list-group-item list-group-item-action"
-        >
+        <a href="lihat_nilai.php" class="list-group-item list-group-item-action">
             📊 Lihat Nilai
         </a>
 
-        <!-- menu ganti password -->
-        <a
-            href="ganti_password_mhs.php"
-            class="list-group-item list-group-item-action"
-        >
+        <a href="ganti_password_mhs.php" class="list-group-item list-group-item-action">
             🔑 Ganti Password
         </a>
 
-        <!-- menu logout -->
-        <a
-            href="../logout.php"
-            class="list-group-item list-group-item-action logout-item"
-        >
+        <a href="../logout.php" class="list-group-item list-group-item-action logout-item">
             🚪 Logout
         </a>
 
     </div>
 
-    <!-- =========================
-         TABEL PORTOFOLIO
-    ========================= -->
+    <!-- TABEL PORTOFOLIO -->
     <div class="card shadow-sm">
         <div class="card-body p-0">
 
             <table class="table table-bordered align-middle mb-0">
 
-                <!-- header tabel -->
-                <thead class="table-danger text-center">
+                <thead class="table-primary text-center">
                     <tr>
                         <th width="5%">No</th>
                         <th width="15%">Gambar</th>
@@ -178,15 +140,12 @@ $nama = $dataNama['nama'];
                 <tbody>
 
 <?php
-// query data portofolio mahasiswa
 $queryPortofolio = mysqli_query(
     $koneksi,
     "SELECT * FROM portofolio WHERE id_mahasiswa='$idMahasiswa'"
 );
 
-// cek apakah mahasiswa memiliki portofolio
 if (mysqli_num_rows($queryPortofolio) == 0) {
-    // jika belum ada portofolio
     echo "
         <tr>
             <td colspan='5' class='text-center'>
@@ -195,68 +154,43 @@ if (mysqli_num_rows($queryPortofolio) == 0) {
         </tr>
     ";
 } else {
-
-    // nomor urut tabel
     $no = 1;
-
-    // looping data portofolio
     while ($p = mysqli_fetch_assoc($queryPortofolio)) {
 ?>
-                    <tr>
-                        <!-- nomor -->
-                        <td class="text-center">
-                            <?= $no++ ?>
-                        </td>
+        <tr>
+            <td class="text-center"><?= $no++ ?></td>
 
-                        <!-- gambar -->
-                        <td class="text-center">
-                            <?php if ($p['gambar']) { ?>
-                                <img
-                                    src="../uploads/<?= htmlspecialchars($p['gambar']) ?>"
-                                    class="preview"
-                                >
-                            <?php } else { ?>
-                                -
-                            <?php } ?>
-                        </td>
+            <td class="text-center">
+                <?php if ($p['gambar']) { ?>
+                    <img src="../uploads/<?= htmlspecialchars($p['gambar']) ?>" class="preview">
+                <?php } else { echo "-"; } ?>
+            </td>
 
-                        <!-- judul -->
-                        <td>
-                            <?= htmlspecialchars($p['judul']) ?>
-                        </td>
+            <td><?= htmlspecialchars($p['judul']) ?></td>
 
-                        <!-- repository -->
-                        <td class="text-center">
-                            <?php if ($p['repo_link']) { ?>
-                                <a
-                                    href="<?= htmlspecialchars($p['repo_link']) ?>"
-                                    target="_blank"
-                                >
-                                    Link
-                                </a>
-                            <?php } else { ?>
-                                -
-                            <?php } ?>
-                        </td>
+            <td class="text-center">
+                <?php if ($p['repo_link']) { ?>
+                    <a href="<?= htmlspecialchars($p['repo_link']) ?>" target="_blank">Link</a>
+                <?php } else { echo "-"; } ?>
+            </td>
 
-                        <!-- aksi -->
-                        <td class="text-center">
-                            <a
-                                href="portofolio_detail.php?id=<?= $p['id_portofolio'] ?>"
-                                class="btn btn-outline-primary btn-sm"
-                            >
-                                Edit
-                            </a>
+            <td class="text-center">
+                <a
+                    href="portofolio_detail.php?id=<?= $p['id_portofolio'] ?>"
+                    class="btn btn-outline-primary btn-sm"
+                >
+                    Edit
+                </a>
 
-                            <a
-                                href="portofolio_detail.php?mode=hapus&id=<?= $p['id_portofolio'] ?>"
-                                onclick="return confirm('Hapus portofolio?')"
-                                class="btn btn-outline-danger btn-sm"
-                            >
-                                Hapus
-                            </a>
-                        </td>
-                    </tr>
+                <a
+                    href="portofolio_detail.php?mode=hapus&id=<?= $p['id_portofolio'] ?>"
+                    onclick="return confirm('Hapus portofolio?')"
+                    class="btn btn-outline-danger btn-sm"
+                >
+                    Hapus
+                </a>
+            </td>
+        </tr>
 <?php
     }
 }
