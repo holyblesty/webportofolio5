@@ -1,68 +1,41 @@
 <?php
 /*
   Nama File   : portofolio_dsn.php
-  Deskripsi   : Halaman dosen untuk melihat daftar portofolio mahasiswa
-                serta melakukan penilaian atau pengeditan nilai
+  Deskripsi   : Halaman dosen untuk melihat portofolio mahasiswa
+                dengan tampilan nilai berbentuk bintang (1–5)
   Pembuat    : Vivian Sarah Diva Alisianoi & Jesina Holyblesty Simatupang
   Tanggal    : 26 Desember 2025
 */
 
-/*
-  Session dibuat hanya aktif selama browser terbuka
-  (aman dan sesuai kebutuhan sistem PBL)
-*/
 session_set_cookie_params(0);
 session_start();
-
-/*
-  Memanggil file koneksi database
-*/
 include "../koneksi.php";
 
 /* =========================
    CEK LOGIN DOSEN
 ========================= */
-/*
-  Memastikan user sudah login
-  dan memiliki role sebagai dosen
-*/
 if (!isset($_SESSION['id_dosen']) || $_SESSION['role'] !== 'dosen') {
-    // Jika tidak valid, kembalikan ke halaman utama
     header("Location: ../index.php");
     exit;
 }
 
-// Mengambil id dosen dari session
 $idDosen = $_SESSION['id_dosen'];
 
 /* =========================
    AMBIL DATA DOSEN
 ========================= */
-/*
-  Query untuk mengambil nama dosen
-  berdasarkan id dosen yang sedang login
-*/
 $qNama = mysqli_query(
     $koneksi,
     "SELECT nama FROM dosen WHERE id_dosen='$idDosen'"
 );
-
-// Mengambil hasil query menjadi array asosiatif
 $dNama = mysqli_fetch_assoc($qNama);
-
-// Menyimpan nama dosen
 $namaDosen = $dNama['nama'];
 
 /* =========================
-   AMBIL KEYWORD PENCARIAN
+   KEYWORD PENCARIAN
 ========================= */
-/*
-  Keyword digunakan untuk fitur pencarian
-  berdasarkan nama atau NIM mahasiswa
-*/
 $keyword = '';
 if (isset($_GET['cari'])) {
-    // Escape input untuk mencegah SQL error
     $keyword = mysqli_real_escape_string($koneksi, $_GET['cari']);
 }
 ?>
@@ -73,52 +46,47 @@ if (isset($_GET['cari'])) {
     <meta charset="UTF-8">
     <title>Portofolio Mahasiswa</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        /* Warna latar halaman */
         body {
-            background: #f9f0f5;
+            background: #e8eeff;
             padding-top: 80px;
         }
 
-        /* Badge status nilai */
-        .badge-belum { background:#f8d7da; color:#842029; }
-        .badge-tinggi { background:#d4edda; color:#155724; }
-        .badge-sedang { background:#fff3cd; color:#856404; }
-        .badge-rendah { background:#f8d7da; color:#721c24; }
-
-        /* Tombol nilai */
-        .btn-danger-soft {
-            background:#dc3545;
-            color:white;
-        }
-        .btn-danger-soft:hover {
-            background:#bb2d3b;
-            color:white;
+        /* ===== WARNA UTAMA ===== */
+        .bg-primary-custom {
+            background: #0041C2;
+            color: white;
         }
 
-        /* Tombol edit */
-        .btn-pink-soft {
-            background:#f8cfe3;
-            color:#7a0044;
+        .btn-primary-custom {
+            background: #0041C2;
+            color: white;
         }
-        .btn-pink-soft:hover {
-            background:#eeb6d2;
-            color:#7a0044;
+
+        .btn-primary-custom:hover {
+            background: #0035a0;
+            color: white;
+        }
+
+        /* ===== STAR DISPLAY ===== */
+        .star {
+            color: #f5c518;
+            font-size: 1.2rem;
+        }
+
+        .star-muted {
+            color: #ccc;
+            font-size: 1.2rem;
         }
     </style>
 </head>
+
 <body>
 
-<!-- =========================
-     NAVBAR
-========================= -->
-<!--
-  Navbar utama untuk halaman dosen
--->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background:#e11584;">
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-primary-custom">
     <div class="container">
         <span class="navbar-brand fw-bold">Dashboard Dosen</span>
         <div class="ms-auto">
@@ -130,20 +98,13 @@ if (isset($_GET['cari'])) {
 
 <div class="container">
 
-    <!-- HEADER HALAMAN -->
-    <div class="mb-4 p-4 rounded text-white" style="background:#e11584;">
+    <!-- HEADER -->
+    <div class="mb-4 p-4 rounded bg-primary-custom">
         <h4 class="mb-1">Portofolio Mahasiswa</h4>
-        <!-- Menampilkan nama dosen yang sedang login -->
         <p class="mb-0">Dosen: <?= htmlspecialchars($namaDosen) ?></p>
     </div>
 
-    <!-- =========================
-         FORM PENCARIAN
-    ========================= -->
-    <!--
-      Form untuk mencari portofolio mahasiswa
-      berdasarkan Nama atau NIM (username)
-    -->
+    <!-- FORM CARI -->
     <div class="card mb-3 shadow-sm">
         <div class="card-body">
             <form method="GET" class="row g-2">
@@ -157,7 +118,7 @@ if (isset($_GET['cari'])) {
                     >
                 </div>
                 <div class="col-md-2 d-grid">
-                    <button type="submit" class="btn btn-pink-soft fw-semibold">
+                    <button class="btn btn-primary-custom fw-semibold">
                         Cari
                     </button>
                 </div>
@@ -165,9 +126,7 @@ if (isset($_GET['cari'])) {
         </div>
     </div>
 
-    <!-- =========================
-         TABEL PORTOFOLIO
-    ========================= -->
+    <!-- TABEL -->
     <div class="card shadow-sm">
         <div class="card-body p-0">
             <table class="table table-bordered align-middle mb-0">
@@ -186,13 +145,6 @@ if (isset($_GET['cari'])) {
                 <tbody>
 
 <?php
-/* =========================
-   QUERY DATA PORTOFOLIO
-========================= */
-/*
-  Mengambil data portofolio mahasiswa
-  NIM direpresentasikan sebagai username
-*/
 $sql = "
     SELECT
         p.id_portofolio,
@@ -200,31 +152,21 @@ $sql = "
         p.deskripsi,
         p.repo_link,
         m.nama,
-        m.username AS nim, -- username digunakan sebagai NIM
+        m.username AS nim,
         n.nilai
     FROM portofolio p
     JOIN mahasiswa m ON m.id_mahasiswa = p.id_mahasiswa
     LEFT JOIN nilai n ON n.id_portofolio = p.id_portofolio
 ";
 
-/*
-  Jika ada keyword pencarian,
-  tambahkan kondisi WHERE
-*/
 if ($keyword !== '') {
     $sql .= " WHERE m.nama LIKE '%$keyword%'
               OR m.username LIKE '%$keyword%'";
 }
 
-// Mengurutkan data berdasarkan id portofolio
 $sql .= " ORDER BY p.id_portofolio ASC";
-
-// Menjalankan query
 $query = mysqli_query($koneksi, $sql);
 
-/*
-  Jika tidak ada data yang ditemukan
-*/
 if (mysqli_num_rows($query) === 0) {
     echo "
         <tr>
@@ -235,28 +177,21 @@ if (mysqli_num_rows($query) === 0) {
     ";
 } else {
 
-    // Nomor urut tabel
     $no = 1;
-
-    // Menampilkan data portofolio
     while ($p = mysqli_fetch_assoc($query)) {
 
-        /*
-          Menentukan badge dan teks nilai
-          berdasarkan nilai yang diperoleh
-        */
+        /* ===== NILAI BINTANG ===== */
         if ($p['nilai'] === null) {
-            $badge = "badge-belum";
-            $nilaiText = "Belum";
-        } elseif ($p['nilai'] >= 80) {
-            $badge = "badge-tinggi";
-            $nilaiText = $p['nilai'];
-        } elseif ($p['nilai'] >= 60) {
-            $badge = "badge-sedang";
-            $nilaiText = $p['nilai'];
+            $nilaiView = "<span class='text-muted'>Belum</span>";
         } else {
-            $badge = "badge-rendah";
-            $nilaiText = $p['nilai'];
+            $nilaiView = "";
+            for ($i = 1; $i <= 5; $i++) {
+                if ($i <= $p['nilai']) {
+                    $nilaiView .= "<span class='star'>★</span>";
+                } else {
+                    $nilaiView .= "<span class='star-muted'>★</span>";
+                }
+            }
         }
 ?>
         <tr>
@@ -270,14 +205,13 @@ if (mysqli_num_rows($query) === 0) {
                     <a href="<?= htmlspecialchars($p['repo_link']) ?>" target="_blank">Link</a>
                 <?php } else { echo "-"; } ?>
             </td>
-            <td>
-                <span class="badge <?= $badge ?>"><?= $nilaiText ?></span>
+            <td class="text-center">
+                <?= $nilaiView ?>
             </td>
-            <td>
-                <!-- Tombol nilai atau edit nilai -->
+            <td class="text-center">
                 <a
                     href="proses_nilai.php?id_portofolio=<?= $p['id_portofolio'] ?>"
-                    class="btn btn-sm <?= ($p['nilai'] === null) ? 'btn-danger-soft' : 'btn-pink-soft' ?>"
+                    class="btn btn-sm btn-primary-custom"
                 >
                     <?= ($p['nilai'] === null) ? 'Nilai' : 'Edit' ?>
                 </a>
