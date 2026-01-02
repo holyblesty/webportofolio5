@@ -6,50 +6,34 @@
   Tanggal    : 26 Desember 2025
 */
 
-// session hanya aktif selama browser terbuka
 session_set_cookie_params(0);
-
-// memulai session
 session_start();
 
-// memanggil koneksi database
 include "../koneksi.php";
 
-// =========================
-// CEK LOGIN MAHASISWA
-// =========================
-
-// memastikan user sudah login sebagai mahasiswa
+/* =========================
+   CEK LOGIN MAHASISWA
+========================= */
 if (!isset($_SESSION['id_mahasiswa']) || $_SESSION['role'] !== 'mahasiswa') {
-    // jika belum login atau role bukan mahasiswa
     header("Location: ../index.php");
     exit;
 }
 
-// mengambil id mahasiswa dari session
 $idMahasiswa = $_SESSION['id_mahasiswa'];
 
-// =========================
-// AMBIL DATA MAHASISWA
-// =========================
-
-// query untuk mengambil nama mahasiswa
+/* =========================
+   AMBIL DATA MAHASISWA
+========================= */
 $queryNama = mysqli_query(
     $koneksi,
     "SELECT nama FROM mahasiswa WHERE id_mahasiswa='$idMahasiswa'"
 );
-
-// mengambil hasil query
 $dataNama = mysqli_fetch_assoc($queryNama);
-
-// menyimpan nama mahasiswa
 $namaMahasiswa = $dataNama['nama'];
 
-// =========================
-// AMBIL DATA NILAI PROYEK
-// =========================
-
-// query untuk mengambil data portofolio, nilai, dan dosen
+/* =========================
+   AMBIL DATA NILAI PROYEK
+========================= */
 $sql = "
     SELECT
         p.judul,
@@ -64,7 +48,6 @@ $sql = "
     WHERE p.id_mahasiswa = '$idMahasiswa'
 ";
 
-// menjalankan query
 $dataNilai = mysqli_query($koneksi, $sql);
 ?>
 
@@ -74,7 +57,6 @@ $dataNilai = mysqli_query($koneksi, $sql);
     <meta charset="UTF-8">
     <title>Nilai Proyek</title>
 
-    <!-- Bootstrap CSS -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -83,12 +65,12 @@ $dataNilai = mysqli_query($koneksi, $sql);
     <style>
         /* latar belakang halaman */
         body {
-            background: #f9f0f5;
+            background: #f4f7ff;
         }
 
         /* header kartu */
-        .card-header-pink {
-            background: #e11584;
+        .card-header-blue {
+            background: #0041C2;
             color: white;
         }
     </style>
@@ -97,11 +79,9 @@ $dataNilai = mysqli_query($koneksi, $sql);
 
 <div class="container mt-4">
 
-    <!-- =========================
-         HEADER HALAMAN
-    ========================= -->
+    <!-- HEADER HALAMAN -->
     <div class="card mb-3 shadow-sm">
-        <div class="card-header card-header-pink">
+        <div class="card-header card-header-blue">
             <h4 class="mb-0">Nilai & Catatan Proyek</h4>
         </div>
         <div class="card-body">
@@ -112,9 +92,7 @@ $dataNilai = mysqli_query($koneksi, $sql);
         </div>
     </div>
 
-    <!-- =========================
-         TOMBOL KEMBALI
-    ========================= -->
+    <!-- TOMBOL KEMBALI -->
     <div class="mb-3">
         <a
             href="dashboard_mhs.php"
@@ -125,11 +103,9 @@ $dataNilai = mysqli_query($koneksi, $sql);
     </div>
 
 <?php
-// cek apakah ada data nilai
 if (mysqli_num_rows($dataNilai) == 0) {
 ?>
 
-    <!-- jika belum ada proyek -->
     <div class="alert alert-info">
         Belum ada proyek.
     </div>
@@ -138,16 +114,13 @@ if (mysqli_num_rows($dataNilai) == 0) {
 } else {
 ?>
 
-    <!-- =========================
-         TABEL NILAI PROYEK
-    ========================= -->
+    <!-- TABEL NILAI PROYEK -->
     <div class="card shadow-sm">
         <div class="card-body p-0">
 
             <table class="table table-bordered align-middle mb-0">
 
-                <!-- header tabel -->
-                <thead class="table-danger text-center">
+                <thead class="table-primary text-center">
                     <tr>
                         <th>Judul Proyek</th>
                         <th width="15%">Nilai</th>
@@ -159,26 +132,19 @@ if (mysqli_num_rows($dataNilai) == 0) {
                 <tbody>
 
 <?php
-    // looping data nilai
     while ($row = mysqli_fetch_assoc($dataNilai)) {
 ?>
                     <tr>
-                        <!-- judul proyek -->
-                        <td>
-                            <?= htmlspecialchars($row['judul']) ?>
-                        </td>
+                        <td><?= htmlspecialchars($row['judul']) ?></td>
 
-                        <!-- nilai -->
                         <td class="text-center">
                             <?= $row['nilai'] !== null ? $row['nilai'] : 'Belum dinilai' ?>
                         </td>
 
-                        <!-- catatan -->
                         <td>
                             <?= $row['catatan'] ? htmlspecialchars($row['catatan']) : '-' ?>
                         </td>
 
-                        <!-- nama dosen -->
                         <td>
                             <?= $row['nama_dosen'] ? htmlspecialchars($row['nama_dosen']) : '-' ?>
                         </td>
