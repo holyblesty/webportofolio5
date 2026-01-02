@@ -6,67 +6,45 @@
   Tanggal    : 26 Desember 2025
 */
 
-// session hanya aktif selama browser terbuka
 session_set_cookie_params(0);
-
-// memulai session
 session_start();
 
-// memanggil koneksi database
 include "../koneksi.php";
 
-// =========================
-// CEK LOGIN MAHASISWA
-// =========================
-
-// memastikan user sudah login sebagai mahasiswa
+/* =========================
+   CEK LOGIN MAHASISWA
+========================= */
 if (!isset($_SESSION['id_mahasiswa']) || $_SESSION['role'] !== 'mahasiswa') {
-    // jika belum login atau role bukan mahasiswa
     header("Location: ../index.php");
     exit;
 }
 
-// mengambil id mahasiswa dari session
 $idMahasiswa = $_SESSION['id_mahasiswa'];
-
-// variabel pesan notifikasi
 $pesan = "";
 
-// =========================
-// PROSES GANTI PASSWORD
-// =========================
-
-// cek apakah form disubmit
+/* =========================
+   PROSES GANTI PASSWORD
+========================= */
 if (isset($_POST['submit'])) {
 
-    // mengambil input dari form
     $passwordLama = $_POST['password_lama'];
     $passwordBaru = $_POST['password_baru'];
     $konfirmasi   = $_POST['konfirmasi'];
 
-    // query password lama mahasiswa
     $queryPassword = mysqli_query(
         $koneksi,
         "SELECT password FROM mahasiswa WHERE id_mahasiswa='$idMahasiswa'"
     );
 
-    // mengambil hasil query
     $dataPassword = mysqli_fetch_assoc($queryPassword);
 
-    // validasi password lama
     if (!$dataPassword || !password_verify($passwordLama, $dataPassword['password'])) {
         $pesan = "Password lama salah";
-    }
-    // validasi konfirmasi password
-    elseif ($passwordBaru !== $konfirmasi) {
+    } elseif ($passwordBaru !== $konfirmasi) {
         $pesan = "Konfirmasi tidak cocok";
-    }
-    // jika semua valid
-    else {
-        // hash password baru
+    } else {
         $hashPassword = password_hash($passwordBaru, PASSWORD_DEFAULT);
 
-        // update password di database
         mysqli_query(
             $koneksi,
             "UPDATE mahasiswa 
@@ -74,7 +52,6 @@ if (isset($_POST['submit'])) {
              WHERE id_mahasiswa='$idMahasiswa'"
         );
 
-        // pesan sukses
         $pesan = "Password berhasil diubah";
     }
 }
@@ -86,7 +63,6 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <title>Ganti Password Mahasiswa</title>
 
-    <!-- Bootstrap CSS -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -94,23 +70,23 @@ if (isset($_POST['submit'])) {
 
     <style>
         /* tombol simpan */
-        .btn-pink {
-            background-color: #e83e8c;
-            border-color: #e83e8c;
+        .btn-blue {
+            background-color: #0041C2;
+            border-color: #0041C2;
             color: white;
         }
 
         /* hover tombol simpan */
-        .btn-pink:hover {
-            background-color: #d63384;
-            border-color: #d63384;
+        .btn-blue:hover {
+            background-color: #00349a;
+            border-color: #00349a;
             color: white;
         }
 
-        /* tombol kembali: normal bootstrap, hover pink tua */
+        /* tombol kembali */
         .btn-back:hover {
-            background-color: #ad1457 !important;
-            border-color: #ad1457 !important;
+            background-color: #0041C2 !important;
+            border-color: #0041C2 !important;
             color: white !important;
         }
     </style>
@@ -118,9 +94,6 @@ if (isset($_POST['submit'])) {
 
 <body class="bg-light">
 
-<!-- =========================
-     FORM GANTI PASSWORD
-========================= -->
 <form
     method="post"
     class="container mt-5"
@@ -129,19 +102,16 @@ if (isset($_POST['submit'])) {
     <div class="card shadow-sm">
         <div class="card-body">
 
-            <!-- judul halaman -->
             <h3 class="text-center mb-4">
                 Ganti Password Mahasiswa
             </h3>
 
-            <!-- pesan notifikasi -->
             <?php if ($pesan != "") { ?>
                 <div class="alert alert-info text-center">
                     <?= $pesan ?>
                 </div>
             <?php } ?>
 
-            <!-- input password lama -->
             <label>Password Lama</label>
             <input
                 type="password"
@@ -150,7 +120,6 @@ if (isset($_POST['submit'])) {
                 required
             >
 
-            <!-- input password baru -->
             <label>Password Baru</label>
             <input
                 type="password"
@@ -159,7 +128,6 @@ if (isset($_POST['submit'])) {
                 required
             >
 
-            <!-- input konfirmasi password -->
             <label>Konfirmasi Password</label>
             <input
                 type="password"
@@ -168,15 +136,13 @@ if (isset($_POST['submit'])) {
                 required
             >
 
-            <!-- tombol simpan -->
             <button
                 name="submit"
-                class="btn btn-pink w-100 mb-2"
+                class="btn btn-blue w-100 mb-2"
             >
                 Simpan
             </button>
 
-            <!-- tombol kembali ke dashboard -->
             <a
                 href="dashboard_mhs.php"
                 class="btn btn-outline-secondary btn-back w-100"
