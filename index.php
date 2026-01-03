@@ -7,7 +7,9 @@
    Tanggal   : 26 Desember 2025
 ========================================================= */
 
+session_set_cookie_params(0);
 session_start();
+
 
 /* =========================
    CEK STATUS LOGIN
