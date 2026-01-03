@@ -1,7 +1,7 @@
 <?php
 /*
   Nama File   : lihat_nilai.php
-  Deskripsi   : Halaman mahasiswa untuk melihat nilai dan catatan proyek
+  Deskripsi   : Halaman mahasiswa untuk melihat nilai (bintang) dan catatan proyek
   Pembuat    : Vivian Sarah Diva Alisianoi & Jesina Holyblesty Simatupang
   Tanggal    : 26 Desember 2025
 */
@@ -63,15 +63,24 @@ $dataNilai = mysqli_query($koneksi, $sql);
     >
 
     <style>
-        /* latar belakang halaman */
         body {
             background: #f4f7ff;
         }
 
-        /* header kartu */
         .card-header-blue {
             background: #0041C2;
             color: white;
+        }
+
+        /* ===== STAR RATING DISPLAY ===== */
+        .star {
+            color: gold;
+            font-size: 1.3rem;
+        }
+
+        .star-muted {
+            color: #ccc;
+            font-size: 1.3rem;
         }
     </style>
 </head>
@@ -94,25 +103,18 @@ $dataNilai = mysqli_query($koneksi, $sql);
 
     <!-- TOMBOL KEMBALI -->
     <div class="mb-3">
-        <a
-            href="dashboard_mhs.php"
-            class="btn btn-outline-secondary btn-sm"
-        >
+        <a href="dashboard_mhs.php" class="btn btn-outline-secondary btn-sm">
             ← Kembali ke Dashboard
         </a>
     </div>
 
-<?php
-if (mysqli_num_rows($dataNilai) == 0) {
-?>
+<?php if (mysqli_num_rows($dataNilai) == 0) { ?>
 
     <div class="alert alert-info">
         Belum ada proyek.
     </div>
 
-<?php
-} else {
-?>
+<?php } else { ?>
 
     <!-- TABEL NILAI PROYEK -->
     <div class="card shadow-sm">
@@ -123,7 +125,7 @@ if (mysqli_num_rows($dataNilai) == 0) {
                 <thead class="table-primary text-center">
                     <tr>
                         <th>Judul Proyek</th>
-                        <th width="15%">Nilai</th>
+                        <th width="18%">Nilai</th>
                         <th>Catatan</th>
                         <th width="20%">Dosen</th>
                     </tr>
@@ -131,14 +133,26 @@ if (mysqli_num_rows($dataNilai) == 0) {
 
                 <tbody>
 
-<?php
-    while ($row = mysqli_fetch_assoc($dataNilai)) {
-?>
+                <?php while ($row = mysqli_fetch_assoc($dataNilai)) { ?>
                     <tr>
                         <td><?= htmlspecialchars($row['judul']) ?></td>
 
+                        <!-- NILAI BINTANG -->
                         <td class="text-center">
-                            <?= $row['nilai'] !== null ? $row['nilai'] : 'Belum dinilai' ?>
+                        <?php
+                        if ($row['nilai'] !== null) {
+                            $nilai = (int) $row['nilai'];
+                            for ($i = 1; $i <= 5; $i++) {
+                                if ($i <= $nilai) {
+                                    echo "<span class='star'>★</span>";
+                                } else {
+                                    echo "<span class='star-muted'>★</span>";
+                                }
+                            }
+                        } else {
+                            echo "<span class='text-muted'>Belum dinilai</span>";
+                        }
+                        ?>
                         </td>
 
                         <td>
@@ -149,9 +163,7 @@ if (mysqli_num_rows($dataNilai) == 0) {
                             <?= $row['nama_dosen'] ? htmlspecialchars($row['nama_dosen']) : '-' ?>
                         </td>
                     </tr>
-<?php
-    }
-?>
+                <?php } ?>
 
                 </tbody>
             </table>
@@ -159,9 +171,7 @@ if (mysqli_num_rows($dataNilai) == 0) {
         </div>
     </div>
 
-<?php
-}
-?>
+<?php } ?>
 
 </div>
 
