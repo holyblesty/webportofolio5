@@ -37,13 +37,7 @@ if (isset($_SESSION['role'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* =========================
-           SETUP LAYOUT & FOOTER
-           (FOOTER NGIKUT HALAMAN)
-        ========================= */
-        html, body {
-            height: 100%;
-        }
+        html, body { height: 100%; }
 
         body {
             background: white;
@@ -55,50 +49,53 @@ if (isset($_SESSION['role'])) {
             flex-direction: column;
         }
 
-        .main-content {
-            flex: 1;
-        }
+        .main-content { flex: 1; }
 
         /* =========================
            NAVBAR
         ========================= */
-        .navbar {
-            background: #FD5DA8;
-        }
+        .navbar { background: #0041C2; }
 
         .navbar .nav-link.active {
-            background: rgba(208,65,144,.3);
+            background: rgba(0,65,194,.3);
             border-radius: 10px;
-            color: #e11584 !important;
+            color: #0041C2 !important;
         }
 
         /* =========================
            DROPDOWN MENU
         ========================= */
-        .dropdown-menu {
-            width: 400px;
-            background: rgba(254,197,229,0.85);
-            border-radius: 12px;
-            padding: 10px;
-            border: none;
-            backdrop-filter: blur(6px);
-        }
+        /* =========================
+   DROPDOWN MENU (RAPI & TIDAK LEBAR)
+========================= */
+.dropdown-menu{
+    min-width:260px;          /* tidak terlalu lebar */
+    padding:6px 0;            /* hilangkan jarak kosong atas */
+    margin-top:6px;
+    border-radius:12px;
+    border:none;
+    background:#eaf0ff;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
 
-        .dropdown-item {
-            font-weight: 600;
-            color: #d63384;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            text-align: center;
-        }
+.dropdown-item{
+    color:#0041C2;
+    font-weight:600;
+    font-size:14px;
+    padding:10px 16px;
+    margin:4px 8px;
+    border-radius:8px;
+    text-align:left;          /* lebih rapi */
+    transition:.2s;
+}
 
-        .dropdown-item:hover {
-            background: rgba(222,100,169,0.7);
-            color: white;
-        }
+.dropdown-item:hover{
+    background:#0041C2;
+    color:white;
+}
 
         /* =========================
-           FOTO PROFIL BULAT
+           FOTO PROFIL
         ========================= */
         .circle-img {
             width: 500px;
@@ -112,7 +109,7 @@ if (isset($_SESSION['role'])) {
            KONTEN BOX
         ========================= */
         .content-box {
-            background: #fec5e5;
+            background: rgba(0,65,194,.1);
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 3px 10px rgba(0,0,0,.1);
@@ -120,13 +117,8 @@ if (isset($_SESSION['role'])) {
             transition: .3s;
         }
 
-        .content-box:hover {
-            transform: translateY(-4px);
-        }
+        .content-box:hover { transform: translateY(-4px); }
 
-        /* =========================
-           PARAGRAF
-        ========================= */
         .paragraph-section p {
             text-align: justify;
             text-indent: 40px;
@@ -143,68 +135,53 @@ if (isset($_SESSION['role'])) {
         }
 
         .custom-caption {
-            background: #FFB6C1CC;
+            background: rgba(0,65,194,.3);
             border-radius: 12px;
             padding: 6px 12px;
             color: #000;
         }
 
         /* =========================
-           LOGIN BUTTON & FORM
+           LOGIN
         ========================= */
         .modal-header {
-            background: #e11584;
+            background: #0041C2;
             color: #fff;
         }
 
-        .btn-pink {
-            background: #e11584;
+        .btn-blue {
+            background: #0041C2;
             color: white;
             border: none;
             transition: .25s;
         }
 
-        .btn-pink:hover {
-            background: #d10b73;
+        .btn-blue:hover {
+            background: #003399;
         }
 
         input.form-control {
-            border: 1.5px solid #ffb6c1;
+            border: 1.5px solid #0041C2;
             border-radius: 10px;
         }
 
         input.form-control:focus {
-            box-shadow: 0 0 5px rgba(255,105,180,.6);
-            border-color: #ff69b4;
+            box-shadow: 0 0 5px rgba(0,65,194,.6);
+            border-color: #0041C2;
         }
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
         @media(max-width:768px){
-            .circle-img {
-                width: 300px;
-                height: 300px;
-            }
-            #carouselPBL img {
-                height: 230px;
-            }
-            .dropdown-menu {
-                width: 90vw;
-            }
+            .circle-img { width: 300px; height: 300px; }
+            #carouselPBL img { height: 230px; }
+            .dropdown-menu { width: 90vw; }
         }
-        /* ==== FOOTER ==== */
-    footer {
-      margin-top:auto;
-    }
+
+        footer { margin-top:auto; }
     </style>
 </head>
 
 <body>
 
-<!-- =========================
-     NAVBAR
-========================= -->
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
         <a class="navbar-brand fw-bold text-white">WEB PORTOFOLIO PROJEK PBL</a>
@@ -220,28 +197,32 @@ if (isset($_SESSION['role'])) {
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown">
-                        KUMPULAN PROJEK PBL
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="buku-tamu-tata-usaha.html">BUKU TAMU TATA USAHA</a></li>
-                        <li><a class="dropdown-item" href="pengelolaan-rapat.html">PENGELOLAAN RAPAT</a></li>
-                        <li><a class="dropdown-item" href="pencatatan-notulen.html">PENCATATAN NOTULEN</a></li>
-                        <li><a class="dropdown-item" href="pengelolaan-surat-peringatan-sp.html">PENGELOLAAN SURAT PERINGATAN SP</a></li>
-                        <li><a class="dropdown-item" href="jadwal-perkuliahan-mahasiswa-pribadi.html">JADWAL PERKULIAHAN MAHASISWA PRIBADI</a></li>
-                        <li><a class="dropdown-item" href="web-informasi-event-kampus.html">WEB INFORMASI EVENT KAMPUS</a></li>
-                        <li><a class="dropdown-item" href="aplikasi-pengumuman-akademik-online.html">APLIKASI PENGUMUMAN AKADEMIK ONLINE</a></li>
-                    </ul>
-                </li>
+    <a class="nav-link dropdown-toggle text-white fw-semibold"
+       href="#"
+       role="button"
+       data-bs-toggle="dropdown">
+        KUMPULAN PROJEK PBL
+    </a>
 
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="buku-tamu-tata-usaha.html">BUKU TAMU TATA USAHA</a></li>
+        <li><a class="dropdown-item" href="pengelolaan-rapat.html">PENGELOLAAN RAPAT</a></li>
+        <li><a class="dropdown-item" href="pencatatan-notulen.html">PENCATATAN NOTULEN</a></li>
+        <li><a class="dropdown-item" href="pengelolaan-surat-peringatan-sp.html">PENGELOLAAN SURAT PERINGATAN SP</a></li>
+        <li><a class="dropdown-item" href="jadwal-perkuliahan-mahasiswa-pribadi.html">JADWAL PERKULIAHAN MAHASISWA PRIBADI</a></li>
+        <li><a class="dropdown-item" href="web-informasi-event-kampus.html">WEB INFORMASI EVENT KAMPUS</a></li>
+        <li><a class="dropdown-item" href="aplikasi-pengumuman-akademik-online.html">APLIKASI PENGUMUMAN AKADEMIK ONLINE</a></li>
+    </ul>
+</li>
+
+      </a>
                 <li class="nav-item ms-3">
-                    <button id="loginBtn" class="btn btn-pink px-3 fw-semibold">LOGIN</button>
+                    <button id="loginBtn" class="btn btn-blue px-3 fw-semibold">LOGIN</button>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
 <!-- =========================
      MODAL PILIH LOGIN
 ========================= -->
@@ -257,17 +238,17 @@ if (isset($_SESSION['role'])) {
             </div>
 
             <div class="modal-body text-center p-4">
-                <p class="mb-3">Silakan pilih jenis login 💖</p>
+                <p class="mb-3">Silakan pilih jenis login </p>
 
                 <button id="btnLoginDosen"
                         type="button"
-                        class="btn btn-pink w-100 mb-2 py-2">
+                        class="btn btn-blue w-100 mb-2 py-2">
                     Login Dosen
                 </button>
 
                 <button id="btnLoginMahasiswa"
                         type="button"
-                        class="btn btn-pink w-100 py-2">
+                        class="btn btn-blue w-100 py-2">
                     Login Mahasiswa
                 </button>
             </div>
@@ -309,8 +290,8 @@ if (isset($_SESSION['role'])) {
                            required>
 
                     <button type="submit"
-                            class="btn btn-pink w-100 py-2 fw-semibold">
-                        Login 💖
+                            class="btn btn-blue w-100 py-2 fw-semibold">
+                        Login 
                     </button>
 
                 </form>
@@ -436,20 +417,17 @@ if (isset($_SESSION['role'])) {
   </div>
 </div>
 
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer class="text-center text-white py-3" style="background:#FD5DA8;">
+<footer class="text-center text-white py-3" style="background:#0041C2;">
     © 2025 Projek PBL | All Rights Reserved
 </footer>
 
-<!-- =========================
-     BOOTSTRAP JS
-========================= -->
+
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Script pengaturan login modal -->
+<!-- =========================
+     SCRIPT LOGIN MODAL
+========================= -->
 <script>
     const modalPick = new bootstrap.Modal('#loginModal');
     const modalForm = new bootstrap.Modal('#formLoginModal');
