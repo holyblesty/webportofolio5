@@ -74,7 +74,7 @@ $nama = $dataNama['nama'];
 
 /* warna latar belakang halaman */
 body {
-    background: #fbfbfbff;
+    background: #F4F7FF;
 }
 
 /* header dashboard */
