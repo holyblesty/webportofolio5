@@ -61,40 +61,36 @@ if (isset($_SESSION['role'])) {
         .navbar .nav-link.active {
             background: rgba(0,65,194,.3);
             border-radius: 10px;
-            color: #0041C2 !important;
+            color: #f1f3f7ff !important;
         }
 
-        /* =========================
-           DROPDOWN MENU
-        ========================= */
-        /* =========================
-   DROPDOWN MENU (RAPI & TIDAK LEBAR)
-========================= */
-.dropdown-menu{
-    min-width:260px;          /* tidak terlalu lebar */
-    padding:6px 0;            /* hilangkan jarak kosong atas */
-    margin-top:6px;
-    border-radius:12px;
-    border:none;
-    background:#eaf0ff;
-    box-shadow:0 8px 20px rgba(0,0,0,.15);
-}
+/* =========================
+   DROPDOWN MENU
+ ========================= */
 
-.dropdown-item{
-    color:#0041C2;
-    font-weight:600;
-    font-size:14px;
-    padding:10px 16px;
-    margin:4px 8px;
-    border-radius:8px;
-    text-align:left;          /* lebih rapi */
-    transition:.2s;
-}
+    /* DROPDOWN */
+    .dropdown-menu{
+      min-width:280px;
+      background-color:rgba(0,65,194,0.15);
+      border-radius:10px;
+      padding:8px;
+      border:none;
+      backdrop-filter:blur(6px);
+    }
 
-.dropdown-item:hover{
-    background:#0041C2;
-    color:white;
-}
+    .dropdown-menu .dropdown-item{
+      color:#0041C2;
+      font-weight:500;
+      text-align:center;
+      margin-bottom:10px;
+      border-radius:20px;
+      transition:background-color 0.3s ease;
+    }
+
+    .dropdown-menu .dropdown-item:hover{
+      background-color:rgba(0,65,194,0.25);
+      color:#003399;
+    }
 
         /* =========================
            FOTO PROFIL
