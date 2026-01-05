@@ -67,12 +67,10 @@ if (isset($_SESSION['role'])) {
         /* =========================
            DROPDOWN MENU
         ========================= */
-        /* =========================
-   DROPDOWN MENU (RAPI & TIDAK LEBAR)
-========================= */
+   
 .dropdown-menu{
-    min-width:260px;          /* tidak terlalu lebar */
-    padding:6px 0;            /* hilangkan jarak kosong atas */
+    min-width:260px;          
+    padding:6px 0;            
     margin-top:6px;
     border-radius:12px;
     border:none;
@@ -87,7 +85,7 @@ if (isset($_SESSION['role'])) {
     padding:10px 16px;
     margin:4px 8px;
     border-radius:8px;
-    text-align:left;          /* lebih rapi */
+    text-align:left;          
     transition:.2s;
 }
 
@@ -140,7 +138,7 @@ if (isset($_SESSION['role'])) {
             background: rgba(0,65,194,.3);
             border-radius: 12px;
             padding: 6px 12px;
-            color: #000;
+            color: #fff;
         }
 
         /* =========================
