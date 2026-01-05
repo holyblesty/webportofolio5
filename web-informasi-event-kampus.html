@@ -20,7 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    body{
+   body{
       font-family:'Poppins',sans-serif;
       background:white;
       padding-top:80px;
@@ -29,15 +29,9 @@
       flex-direction:column;
     }
 
-    /* Navbar */
+    /* ===== NAVBAR ===== */
     .navbar{
       background:#0041C2;
-    }
-
-    .navbar .nav-link.active{
-      background:rgba(0,65,194,.25);
-      border-radius:10px;
-      color:#002f8f !important;
     }
 
     .navbar .nav-link,
@@ -46,7 +40,13 @@
       font-weight:600;
     }
 
-    /* Dropdown */
+    .navbar .nav-link.active{
+      background:rgba(5, 3, 66, 0.25);
+      border-radius:10px;
+      color:white!important;
+    }
+
+   /* DROPDOWN */
     .dropdown-menu{
       min-width:280px;
       background-color:rgba(0,65,194,0.15);
@@ -70,11 +70,11 @@
       color:#003399;
     }
 
-    /* Container */
+    /* ===== CONTAINER ===== */
     .project-container{
       max-width:1000px;
       margin:40px auto;
-      background:#e6edff;
+      background:#e7f1ff;
       padding:30px;
       border-radius:16px;
       box-shadow:0 4px 10px rgba(0,0,0,.1);
@@ -83,7 +83,7 @@
 
     .project-title{
       text-align:center;
-      color:#0041C2;
+      color:#084298;
       font-weight:700;
       margin-bottom:30px;
     }
@@ -99,7 +99,7 @@
       width:480px;
       background:white;
       border-radius:12px;
-      border:2px dashed #0041C2;
+      border:2px dashed #084298;
       padding:10px;
       text-align:center;
     }
@@ -111,7 +111,7 @@
     }
 
     .project-info{
-      background:#c7d7ff;
+      background:#cfe2ff;
       padding:40px 30px;
       border-radius:12px;
       width:420px;
@@ -125,6 +125,7 @@
       margin-bottom:12px;
     }
 
+    /* ===== BUTTON ===== */
     .external-link-box{
       margin-top:60px;
       text-align:center;
@@ -137,8 +138,13 @@
       border-radius:25px;
       text-decoration:none;
       font-weight:600;
+      transition:background 0.3s;
+    }
+    .external-link-box a:hover{
+      background:#003399;
     }
 
+    /* ===== FOOTER ===== */
     footer{
       background:#0041C2;
       color:white;
@@ -160,7 +166,7 @@
 
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
-    <a class="navbar-brand">PENGELOLAAN-RAPAT</a>
+    <a class="navbar-brand">WEB INFORMASI EVENT KAMPUS</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -173,12 +179,10 @@
           <a class="nav-link" href="index.php">BERANDA</a>
         </li>
 
-    <a class="nav-link dropdown-toggle text-white fw-semibold"
-       href="#"
-       role="button"
-       data-bs-toggle="dropdown">
-        KUMPULAN PROJEK PBL
-    </a>
+    <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" role="button" data-bs-toggle="dropdown">
+            KUMPULAN PROJEK PBL
+          </a>
 
     <ul class="dropdown-menu dropdown-menu-end">
         <li><a class="dropdown-item" href="buku-tamu-tata-usaha.html">BUKU TAMU TATA USAHA</a></li>
