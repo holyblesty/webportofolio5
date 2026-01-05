@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    body{
+   body{
       font-family:'Poppins',sans-serif;
       background:white;
       padding-top:80px;
@@ -29,20 +29,20 @@
     }
 
     /* NAVBAR */
-    .navbar {
-      background: #0041C2;
-    }
-
-    .navbar .nav-link.active {
-      background: rgba(0,65,194,.25);
-      border-radius: 10px;
-      color: #0041C2 !important;
+    .navbar{
+      background:#0041C2;
     }
 
     .navbar .nav-link,
     .navbar .navbar-brand{
       color:white!important;
       font-weight:600;
+    }
+
+    .navbar .nav-link.active{
+      background:rgba(5, 3, 66, 0.25);
+      border-radius:10px;
+      color:white!important;
     }
 
     /* DROPDOWN */
@@ -68,11 +68,12 @@
       background-color:rgba(0,65,194,0.25);
       color:#003399;
     }
+
     /* CONTAINER */
     .project-container{
       max-width:1000px;
       margin:40px auto;
-      background:#e6ecff;
+      background:#eaf0ff;
       padding:30px;
       border-radius:16px;
       box-shadow:0 4px 10px rgba(0,0,0,.1);
@@ -109,7 +110,7 @@
     }
 
     .project-info{
-      background:#dbe4ff;
+      background:#dbe6ff;
       padding:40px 30px;
       border-radius:12px;
       width:420px;
@@ -121,8 +122,10 @@
       font-weight:bold;
       font-size:20px;
       margin-bottom:12px;
+      color:#003399;
     }
 
+    /* LINK PROJEK */
     .external-link-box{
       margin-top:60px;
       text-align:center;
@@ -135,8 +138,14 @@
       border-radius:25px;
       text-decoration:none;
       font-weight:600;
+      transition:background 0.3s;
     }
 
+    .external-link-box a:hover{
+      background:#003399;
+    }
+
+    /* FOOTER */
     footer{
       background:#0041C2;
       color:white;
@@ -171,12 +180,10 @@
           <a class="nav-link" href="index.php">BERANDA</a>
         </li>
 
-    <a class="nav-link dropdown-toggle text-white fw-semibold"
-       href="#"
-       role="button"
-       data-bs-toggle="dropdown">
-        KUMPULAN PROJEK PBL
-    </a>
+    <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" role="button" data-bs-toggle="dropdown">
+            KUMPULAN PROJEK PBL
+          </a>
 
     <ul class="dropdown-menu dropdown-menu-end">
         <li><a class="dropdown-item" href="buku-tamu-tata-usaha.html">BUKU TAMU TATA USAHA</a></li>
