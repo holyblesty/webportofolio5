@@ -1,48 +1,68 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <!-- Mengatur encoding karakter agar mendukung UTF-8 -->
   <meta charset="UTF-8">
+
+  <!-- Mengatur viewport agar tampilan responsif di berbagai perangkat -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Judul halaman -->
   <title>JADWAL PERKULIAHAN MAHASISWA (PRIBADI)</title>
 
+  <!-- Import CSS Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Import font Poppins dari Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
+    /* =========================
+       PENGATURAN DASAR BODY
+    ========================= */
     body{
-      font-family:'Poppins',sans-serif;
-      background:white;
-      padding-top:80px;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
+      font-family:'Poppins',sans-serif; /* Font utama halaman */
+      background:white;                 /* Warna latar belakang */
+      padding-top:80px;                 /* Jarak atas agar tidak tertutup navbar */
+      min-height:100vh;                 /* Tinggi minimum layar */
+      display:flex;                     /* Menggunakan flexbox */
+      flex-direction:column;            /* Susunan vertikal */
     }
 
+    /* =========================
+       NAVBAR
+    ========================= */
     .navbar{
-      background:#0041C2;
+      background:#0041C2; /* Warna latar navbar */
     }
 
+    /* Menu navbar yang aktif */
     .navbar .nav-link.active{
       background:rgba(5, 3, 66, 0.25);
       border-radius:10px;
       color:white!important;
     }
 
+    /* Warna teks menu dan brand navbar */
     .navbar .nav-link,
     .navbar .navbar-brand{
       color:white!important;
       font-weight:600;
     }
 
+    /* =========================
+       DROPDOWN MENU
+    ========================= */
     .dropdown-menu{
-      min-width:280px;
-      background-color:rgba(0,65,194,0.15);
-      border-radius:10px;
-      padding:8px;
-      border:none;
-      backdrop-filter:blur(6px);
+      min-width:280px;                          /* Lebar minimum dropdown */
+      background-color:rgba(0,65,194,0.15);     /* Warna latar dropdown */
+      border-radius:10px;                       /* Sudut membulat */
+      padding:8px;                              /* Jarak dalam */
+      border:none;                              /* Tanpa border */
+      backdrop-filter:blur(6px);                /* Efek blur */
     }
 
+    /* Item pada dropdown */
     .dropdown-menu .dropdown-item{
       color:#0041C2;
       font-weight:500;
@@ -52,21 +72,26 @@
       transition:background-color 0.3s ease;
     }
 
+    /* Efek hover item dropdown */
     .dropdown-menu .dropdown-item:hover{
       background-color:rgba(0,65,194,0.25);
       color:#003399;
     }
 
+    /* =========================
+       CONTAINER PROJEK
+    ========================= */
     .project-container{
-      max-width:1000px;
-      margin:40px auto;
+      max-width:1000px;                  /* Lebar maksimum konten */
+      margin:40px auto;                  /* Posisi konten di tengah */
       background:#E6ECFF;
       padding:30px;
       border-radius:16px;
       box-shadow:0 4px 10px rgba(0,0,0,.1);
-      flex-grow:1;
+      flex-grow:1;                       /* Mengisi sisa tinggi halaman */
     }
 
+    /* Judul projek */
     .project-title{
       text-align:center;
       color:#0041C2;
@@ -74,6 +99,7 @@
       margin-bottom:30px;
     }
 
+    /* Konten utama projek */
     .project-content{
       display:flex;
       gap:30px;
@@ -81,6 +107,7 @@
       justify-content:center;
     }
 
+    /* Box gambar projek */
     .project-image{
       width:480px;
       background:white;
@@ -90,11 +117,13 @@
       text-align:center;
     }
 
+    /* Gambar dokumentasi projek */
     .project-image img{
       max-width:100%;
       border-radius:8px;
     }
 
+    /* Informasi anggota projek */
     .project-info{
       background:#D6E0FF;
       padding:40px 30px;
@@ -104,17 +133,22 @@
       font-weight:600;
     }
 
+    /* Nama anggota */
     .member-name{
       font-weight:bold;
       font-size:20px;
       margin-bottom:12px;
     }
 
+    /* =========================
+       LINK PROJEK
+    ========================= */
     .external-link-box{
       margin-top:60px;
       text-align:center;
     }
 
+    /* Tombol link menuju website projek */
     .external-link-box a{
       background:#0041C2;
       color:white;
@@ -124,6 +158,9 @@
       font-weight:600;
     }
 
+    /* =========================
+       FOOTER
+    ========================= */
     footer{
       background:#0041C2;
       color:white;
@@ -132,6 +169,9 @@
       margin-top:auto;
     }
 
+    /* =========================
+       RESPONSIVE
+    ========================= */
     @media(max-width:768px){
       .project-image,
       .project-info{
@@ -142,64 +182,90 @@
 </head>
 
 <body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
+
+    <!-- Brand / judul navbar -->
     <a class="navbar-brand">JADWAL PERKULIAHAN MAHASISWA PRIBADI</a>
 
+    <!-- Tombol toggle navbar (mobile) -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <!-- Menu navbar -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
 
+        <!-- Menu beranda -->
         <li class="nav-item">
           <a class="nav-link" href="index.php">BERANDA</a>
         </li>
 
-    <li class="nav-item dropdown">
+        <!-- Dropdown projek PBL -->
+        <li class="nav-item dropdown">
           <a class="nav-link active dropdown-toggle" role="button" data-bs-toggle="dropdown">
             KUMPULAN PROJEK PBL
           </a>
-          
-    <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item" href="buku-tamu-tata-usaha.html">BUKU TAMU TATA USAHA</a></li>
-        <li><a class="dropdown-item" href="pengelolaan-rapat.html">PENGELOLAAN RAPAT</a></li>
-        <li><a class="dropdown-item" href="pencatatan-notulen.html">PENCATATAN NOTULEN</a></li>
-        <li><a class="dropdown-item" href="pengelolaan-surat-peringatan-sp.html">PENGELOLAAN SURAT PERINGATAN SP</a></li>
-        <li><a class="dropdown-item" href="jadwal-perkuliahan-mahasiswa-pribadi.html">JADWAL PERKULIAHAN MAHASISWA PRIBADI</a></li>
-        <li><a class="dropdown-item" href="web-informasi-event-kampus.html">WEB INFORMASI EVENT KAMPUS</a></li>
-        <li><a class="dropdown-item" href="aplikasi-pengumuman-akademik-online.html">APLIKASI PENGUMUMAN AKADEMIK ONLINE</a></li>
-    </ul>
-</li>
+
+          <!-- Daftar projek -->
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="buku-tamu-tata-usaha.html">BUKU TAMU TATA USAHA</a></li>
+            <li><a class="dropdown-item" href="pengelolaan-rapat.html">PENGELOLAAN RAPAT</a></li>
+            <li><a class="dropdown-item" href="pencatatan-notulen.html">PENCATATAN NOTULEN</a></li>
+            <li><a class="dropdown-item" href="pengelolaan-surat-peringatan-sp.html">PENGELOLAAN SURAT PERINGATAN SP</a></li>
+            <li><a class="dropdown-item" href="jadwal-perkuliahan-mahasiswa-pribadi.html">JADWAL PERKULIAHAN MAHASISWA PRIBADI</a></li>
+            <li><a class="dropdown-item" href="web-informasi-event-kampus.html">WEB INFORMASI EVENT KAMPUS</a></li>
+            <li><a class="dropdown-item" href="aplikasi-pengumuman-akademik-online.html">APLIKASI PENGUMUMAN AKADEMIK ONLINE</a></li>
+          </ul>
         </li>
+
       </ul>
     </div>
   </div>
 </nav>
 
+<!-- =========================
+     KONTEN PROJEK
+========================= -->
 <div class="project-container">
+
+  <!-- Judul projek -->
   <h2 class="project-title">JADWAL PERKULIAHAN MAHASISWA (PRIBADI)</h2>
 
   <div class="project-content">
+
+    <!-- Gambar dokumentasi projek -->
     <div class="project-image">
       <img src="uploads/foto_projek/notulen001.jpg">
     </div>
 
+    <!-- Informasi anggota projek -->
     <div class="project-info">
       <h5 class="mb-4"><strong>HASIL PROJEK PBL OLEH:</strong></h5>
       <p class="member-name">INTAN RAHMADANI PUTRI<br>3312511022</p>
       <p class="member-name">AFDAL RAHMAN HAKIM<br>3312511019</p>
       <p class="member-name">MUHAMMAD FACHRI SULTHANI<br>3312511020</p>
     </div>
+
   </div>
 
+  <!-- Link menuju website projek -->
   <div class="external-link-box">
     <a href="https://contohprojekpbl.com" target="_blank">LIHAT WEBSITE PROJEK</a>
   </div>
 </div>
 
+<!-- =========================
+     FOOTER
+========================= -->
 <footer>© 2025 Projek PBL | All Rights Reserved</footer>
+
+<!-- Import JavaScript Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
