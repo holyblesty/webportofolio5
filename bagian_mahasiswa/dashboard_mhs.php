@@ -8,7 +8,6 @@
 
 session_set_cookie_params(0);
 session_start();
-
 include "../koneksi.php";
 
 /* =========================
@@ -31,16 +30,14 @@ $queryNama = mysqli_query(
 $dataNama = mysqli_fetch_assoc($queryNama);
 $nama = $dataNama['nama'];
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard Mahasiswa</title>
+<meta charset="UTF-8">
+<title>Dashboard Mahasiswa</title>
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         /* latar belakang halaman */
@@ -83,8 +80,8 @@ $nama = $dataNama['nama'];
         }
     </style>
 </head>
-<body>
 
+<body>
 <div class="container mt-4">
 
     <!-- HEADER DASHBOARD -->
@@ -140,12 +137,14 @@ $nama = $dataNama['nama'];
                 <tbody>
 
 <?php
+
 $queryPortofolio = mysqli_query(
     $koneksi,
     "SELECT * FROM portofolio WHERE id_mahasiswa='$idMahasiswa'"
 );
 
 if (mysqli_num_rows($queryPortofolio) == 0) {
+
     echo "
         <tr>
             <td colspan='5' class='text-center'>
@@ -153,56 +152,58 @@ if (mysqli_num_rows($queryPortofolio) == 0) {
             </td>
         </tr>
     ";
+
 } else {
+
     $no = 1;
+
     while ($p = mysqli_fetch_assoc($queryPortofolio)) {
-?>
-        <tr>
-            <td class="text-center"><?= $no++ ?></td>
 
-            <td class="text-center">
-                <?php if ($p['gambar']) { ?>
-                    <img src="../uploads/<?= htmlspecialchars($p['gambar']) ?>" class="preview">
-                <?php } else { echo "-"; } ?>
-            </td>
+        echo "<tr>";
 
-            <td><?= htmlspecialchars($p['judul']) ?></td>
+        echo "<td class='text-center'>";
+        echo $no++;
+        echo "</td>";
 
-            <td class="text-center">
-                <?php if ($p['repo_link']) { ?>
-                    <a href="<?= htmlspecialchars($p['repo_link']) ?>" target="_blank">Link</a>
-                <?php } else { echo "-"; } ?>
-            </td>
+        echo "<td class='text-center'>";
+        if ($p['gambar']) {
+            echo "<img src='../uploads/" . htmlspecialchars($p['gambar']) . "' class='preview'>";
+        } else {
+            echo "-";
+        }
+        echo "</td>";
 
-            <td class="text-center">
-                <a
-                    href="portofolio_detail.php?id=<?= $p['id_portofolio'] ?>"
-                    class="btn btn-outline-primary btn-sm"
-                >
-                    Edit
-                </a>
+        echo "<td>";
+        echo htmlspecialchars($p['judul']);
+        echo "</td>";
 
-                <a
-                    href="portofolio_detail.php?mode=hapus&id=<?= $p['id_portofolio'] ?>"
-                    onclick="return confirm('Hapus portofolio?')"
-                    class="btn btn-outline-danger btn-sm"
-                >
-                    Hapus
-                </a>
-            </td>
-        </tr>
-<?php
+        echo "<td class='text-center'>";
+        if ($p['repo_link']) {
+            echo "<a href='" . htmlspecialchars($p['repo_link']) . "' target='_blank'>Link</a>";
+        } else {
+            echo "-";
+        }
+        echo "</td>";
+
+        echo "<td class='text-center'>";
+
+        echo "<a
+                href='portofolio_detail.php?id=" . $p['id_portofolio'] . "'
+                class='btn btn-outline-primary btn-sm'>
+                Edit
+              </a> ";
+
+        echo "<a
+                href='portofolio_detail.php?mode=hapus&id=" . $p['id_portofolio'] . "'
+                onclick=\"return confirm('Hapus portofolio?')\"
+                class='btn btn-outline-danger btn-sm'>
+                Hapus
+              </a>";
+
+        echo "</td>";
+
+        echo "</tr>";
     }
 }
+
 ?>
-
-                </tbody>
-            </table>
-
-        </div>
-    </div>
-
-</div>
-
-</body>
-</html>
