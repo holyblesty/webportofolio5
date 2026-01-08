@@ -48,7 +48,6 @@ if (isset($_POST['submit'])) {
             $koneksi,
             "UPDATE dosen SET password='$hashPassword' WHERE id_dosen='$idDosen'"
         );
-
         $pesan = "Password berhasil diubah";
     }
 }
@@ -57,14 +56,14 @@ if (isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Ganti Password Dosen</title>
+<meta charset="UTF-8">
+<title>Ganti Password Dosen</title>
 
-    <!-- Bootstrap CSS -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+<!-- Bootstrap CSS -->
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet" 
+>
 
     <style>
         /* warna latar belakang halaman */
@@ -113,8 +112,8 @@ if (isset($_POST['submit'])) {
                 <div class="alert alert-info text-center">
                     <?= $pesan ?>
                 </div>
-            <?php } ?>
 
+            <?php } ?>
             <label>Password Lama</label>
             <input type="password" name="password_lama" class="form-control mb-3" required>
 
