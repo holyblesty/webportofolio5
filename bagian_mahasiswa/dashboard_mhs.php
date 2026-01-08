@@ -1,11 +1,15 @@
-<?php
-/*
-  Nama File   : dashboard_mhs.php
-  Deskripsi   : Halaman dashboard mahasiswa untuk mengelola portofolio dan melihat nilai
-  Pembuat    : Vivian Sarah Diva Alisianoi & Jesina Holyblesty Simatupang
-  Tanggal    : 26 Desember 2025
-*/
+<!-- 
+=========================================================
+  Nama File   : aplikasi-pengumuman-akademik-online.html
+  Deskripsi   : Halaman portofolio Projek PBL
+                Sistem Aplikasi Pengumuman Akademik Online
+  Pembuat     : Jesina HolyBlesty Simatupang (3312511017)
+              : Vivian Sarah Diva Alisianoi (3312511018)
+  Tanggal     : 19 Oktober 2025
+=========================================================
+-->
 
+<?php
 session_set_cookie_params(0);
 session_start();
 include "../koneksi.php";
@@ -82,6 +86,7 @@ $nama = $dataNama['nama'];
 </head>
 
 <body>
+
 <div class="container mt-4">
 
     <!-- HEADER DASHBOARD -->
@@ -137,14 +142,12 @@ $nama = $dataNama['nama'];
                 <tbody>
 
 <?php
-
 $queryPortofolio = mysqli_query(
     $koneksi,
     "SELECT * FROM portofolio WHERE id_mahasiswa='$idMahasiswa'"
 );
 
 if (mysqli_num_rows($queryPortofolio) == 0) {
-
     echo "
         <tr>
             <td colspan='5' class='text-center'>
@@ -152,58 +155,56 @@ if (mysqli_num_rows($queryPortofolio) == 0) {
             </td>
         </tr>
     ";
-
 } else {
-
     $no = 1;
-
     while ($p = mysqli_fetch_assoc($queryPortofolio)) {
+?>
+        <tr>
+            <td class="text-center"><?= $no++ ?></td>
 
-        echo "<tr>";
+            <td class="text-center">
+                <?php if ($p['gambar']) { ?>
+                    <img src="../uploads/<?= htmlspecialchars($p['gambar']) ?>" class="preview">
+                <?php } else { echo "-"; } ?>
+            </td>
 
-        echo "<td class='text-center'>";
-        echo $no++;
-        echo "</td>";
+            <td><?= htmlspecialchars($p['judul']) ?></td>
 
-        echo "<td class='text-center'>";
-        if ($p['gambar']) {
-            echo "<img src='../uploads/" . htmlspecialchars($p['gambar']) . "' class='preview'>";
-        } else {
-            echo "-";
-        }
-        echo "</td>";
+            <td class="text-center">
+                <?php if ($p['repo_link']) { ?>
+                    <a href="<?= htmlspecialchars($p['repo_link']) ?>" target="_blank">Link</a>
+                <?php } else { echo "-"; } ?>
+            </td>
 
-        echo "<td>";
-        echo htmlspecialchars($p['judul']);
-        echo "</td>";
+            <td class="text-center">
+                <a
+                    href="portofolio_detail.php?id=<?= $p['id_portofolio'] ?>"
+                    class="btn btn-outline-primary btn-sm"
+                >
+                    Edit
+                </a>
 
-        echo "<td class='text-center'>";
-        if ($p['repo_link']) {
-            echo "<a href='" . htmlspecialchars($p['repo_link']) . "' target='_blank'>Link</a>";
-        } else {
-            echo "-";
-        }
-        echo "</td>";
-
-        echo "<td class='text-center'>";
-
-        echo "<a
-                href='portofolio_detail.php?id=" . $p['id_portofolio'] . "'
-                class='btn btn-outline-primary btn-sm'>
-                Edit
-              </a> ";
-
-        echo "<a
-                href='portofolio_detail.php?mode=hapus&id=" . $p['id_portofolio'] . "'
-                onclick=\"return confirm('Hapus portofolio?')\"
-                class='btn btn-outline-danger btn-sm'>
-                Hapus
-              </a>";
-
-        echo "</td>";
-
-        echo "</tr>";
+                <a
+                    href="portofolio_detail.php?mode=hapus&id=<?= $p['id_portofolio'] ?>"
+                    onclick="return confirm('Hapus portofolio?')"
+                    class="btn btn-outline-danger btn-sm"
+                >
+                    Hapus
+                </a>
+            </td>
+        </tr>
+<?php
     }
 }
-
 ?>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
