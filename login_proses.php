@@ -1,7 +1,7 @@
 <?php
 // session cookie hanya hidup selama browser terbuka
 session_set_cookie_params(0);
-
+//Pemanggilan Session
 session_start();
 include "koneksi.php";
 
@@ -30,7 +30,7 @@ if ($role == "dosen") {
             $_SESSION['id_dosen'] = $data['id_dosen'];
             $_SESSION['nama']     = $data['nama'];
             $_SESSION['role']     = 'dosen';
-
+            
             header("Location: bagian_dosen/dashboard_dsn.php");
             exit;
         }
@@ -46,6 +46,7 @@ if ($role == "dosen") {
 // ===============================
 // LOGIN MAHASISWA
 // ===============================
+
 if ($role == "mahasiswa") {
 
     $query = mysqli_query(
