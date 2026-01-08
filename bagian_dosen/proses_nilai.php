@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // mengambil data dari form
     $idPortofolio = mysqli_real_escape_string($koneksi, $_POST['id_portofolio']);
-    $nilai        = mysqli_real_escape_string($koneksi, $_POST['nilai']);   // 1–5
+    $nilai        = mysqli_real_escape_string($koneksi, $_POST['nilai']);   // bintang 1–5
     $catatan      = mysqli_real_escape_string($koneksi, $_POST['catatan']);
 
     // validasi nilai bintang
@@ -119,10 +119,6 @@ $dataPortofolio = mysqli_query(
 
 // simpan data portofolio
 $portofolio = mysqli_fetch_assoc($dataPortofolio);
-
-// =========================
-// AMBIL DATA NILAI (JIKA ADA)
-// =========================
 
 // cek apakah dosen sudah memberi nilai
 $queryNilai = mysqli_query(
@@ -223,7 +219,7 @@ body {
        value="<?= htmlspecialchars($portofolio['judul']) ?>" readonly>
 </div>
 
-<!-- NILAI BINTANG -->
+<!-- NILAI BERUPA BINTANG -->
 <div class="mb-3">
 <label class="form-label">Nilai</label><br>
 
