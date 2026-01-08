@@ -107,7 +107,7 @@ body {
     color: white;
 }
 
-/* tampilan bintang nilai */
+/* tampilan nilai bintang */
 .star {
     color: gold;
     font-size: 1.3rem;
