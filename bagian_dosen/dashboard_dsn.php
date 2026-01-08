@@ -28,8 +28,10 @@ $queryNama = mysqli_query(
     $koneksi,
     "SELECT nama FROM dosen WHERE id_dosen='$idDosen'"
 );
+
 // mengambil hasil query dalam bentuk array
 $dataNama = mysqli_fetch_assoc($queryNama);
+
 // menyimpan nama dosen
 $nama = $dataNama['nama'];
 ?>
