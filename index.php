@@ -31,6 +31,7 @@ if (isset($_SESSION['role'])) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -440,13 +441,12 @@ if (isset($_SESSION['role'])) {
                         Terima kasih penulis ucapkan kepada seluruh pengunjung website kami yang telah meluangkan waktu untuk melihat hasil karya ini.
                     </p>
                 </div>
-
-                <!-- ================= CAROUSEL ================= -->
-                <!-- Carousel dokumentasi kegiatan PBL -->
-                <div id="carouselPBL" class="carousel slide mb-4" data-bs-ride="carousel">
-                    <div class="carousel-inner rounded-4 shadow-lg">
-
-                        <!-- Slide pertama -->
+<!-- ================= CAROUSEL ================= -->
+<!-- Carousel dokumentasi kegiatan PBL -->
+<div id="carouselPBL" class="carousel slide mb-4" data-bs-ride="carousel">
+<div class="carousel-inner rounded-4 shadow-lg">
+                      
+<!-- Slide pertama -->
                         <div class="carousel-item active">
                             <img src="dokumentasi-pbl.jpeg" class="d-block w-100">
                             <div class="carousel-caption custom-caption">
