@@ -1,11 +1,15 @@
-<?php
-/*
-  Nama File   : dashboard_dsn.php
-  Deskripsi   : Halaman dashboard dosen untuk mengelola menu utama
-  Pembuat    : Vivian Sarah Diva Alisianoi & Jesina Holyblesty Simatupang
-  Tanggal    : 26 Desember 2025
-*/
+<!-- 
+=========================================================
+  Nama File   : aplikasi-pengumuman-akademik-online.html
+  Deskripsi   : Halaman portofolio Projek PBL
+                Sistem Aplikasi Pengumuman Akademik Online
+  Pembuat     : Jesina HolyBlesty Simatupang (3312511017)
+              : Vivian Sarah Diva Alisianoi (3312511018)
+  Tanggal     : 19 Oktober 2025
+=========================================================
+-->
 
+<?php
 // session hanya aktif selama browser terbuka
 session_set_cookie_params(0);
 // memulai session
@@ -35,6 +39,7 @@ $dataNama = mysqli_fetch_assoc($queryNama);
 // menyimpan nama dosen
 $nama = $dataNama['nama'];
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
