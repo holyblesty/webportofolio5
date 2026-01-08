@@ -44,8 +44,8 @@ $idDosen = $_SESSION['id_dosen'];
 
 // query untuk mengambil nama dosen
 $qNama = mysqli_query(
-    $koneksi,
-    "SELECT nama FROM dosen WHERE id_dosen='$idDosen'"
+$koneksi,
+"SELECT nama FROM dosen WHERE id_dosen='$idDosen'"
 );
 
 // menyimpan hasil query ke array
@@ -76,9 +76,6 @@ if (isset($_GET['cari'])) {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-/* =========================
-   STYLE HALAMAN
-========================= */
 
 /* pengaturan dasar halaman */
 body {
