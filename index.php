@@ -1,12 +1,15 @@
-<?php
-/* =========================================================
-   Nama File : index.php
-   Deskripsi : Halaman utama website portofolio projek PBL
-   Pembuat   : Vivian Sarah Diva Alisianoi
-               Jesina Holyblesty Simatupang
-   Tanggal   : 26 Desember 2025
-========================================================= */
+<!-- 
+=========================================================
+  Nama File   : aplikasi-pengumuman-akademik-online.html
+  Deskripsi   : Halaman portofolio Projek PBL
+                Sistem Aplikasi Pengumuman Akademik Online
+  Pembuat     : Jesina HolyBlesty Simatupang (3312511017)
+              : Vivian Sarah Diva Alisianoi (3312511018)
+  Tanggal     : 19 Oktober 2025
+=========================================================
+-->
 
+<?php
 /* Mengatur cookie session agar berakhir saat browser ditutup */
 session_set_cookie_params(0);
 
