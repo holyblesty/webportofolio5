@@ -60,15 +60,13 @@ if (isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Ganti Password Mahasiswa</title>
+<meta charset="UTF-8">
+<title>Ganti Password Mahasiswa</title>
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+
         /* tombol simpan */
         .btn-blue {
             background-color: #0041C2;
