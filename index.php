@@ -90,15 +90,15 @@ if (isset($_SESSION['role'])) {
 
     /* Mengatur tampilan menu navbar yang aktif */
     .navbar .nav-link.active{
-      background:rgba(5, 3, 66, 0.25);
+      background:#05034240;
       border-radius:10px;
       color:white!important;
-    }
+}
 
     /* ================= DROPDOWN ================= */
     .dropdown-menu{
       min-width:280px; /* Lebar minimum dropdown */
-      background-color:rgba(0,65,194,0.15); /* Warna latar dropdown */
+      background-color:#0041C226; /* Warna latar dropdown */
       border-radius:10px; /* Sudut membulat */
       padding:8px; /* Jarak dalam dropdown */
       border:none; /* Menghilangkan border */
