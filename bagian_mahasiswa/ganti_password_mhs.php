@@ -1,8 +1,7 @@
 <!-- 
 =========================================================
-  Nama File   : aplikasi-pengumuman-akademik-online.html
-  Deskripsi   : Halaman portofolio Projek PBL
-                Sistem Aplikasi Pengumuman Akademik Online
+  Nama File   : ganti_password.php
+  Deskripsi   : Menampilkan bagian ganti password bagian_mahasiswa
   Pembuat     : Jesina HolyBlesty Simatupang (3312511017)
               : Vivian Sarah Diva Alisianoi (3312511018)
   Tanggal     : 19 Oktober 2025
