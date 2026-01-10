@@ -52,11 +52,11 @@ $nama = $dataNama['nama'];
     <style>
         /* warna latar belakang halaman */
         body {
-            background: #f9f0f5;
+            background: rgb(255, 247, 249);
         }
 
         /* header dashboard */
-        .card-header-pink {
+        .card-header-blue {
             background: ;#0041C2
             color: white;
         }
@@ -91,7 +91,7 @@ $nama = $dataNama['nama'];
 
     <!-- card header -->
     <div class="card mb-3 shadow-sm">
-        <div class="card-header card-header-pink">
+        <div class="card-header card-header-blue">
             <h4 class="mb-0">Dashboard Dosen</h4>
         </div>
         <div class="card-body">
