@@ -57,7 +57,7 @@ $nama = $dataNama['nama'];
 
         /* header dashboard */
         .card-header-blue {
-            background: ;#0041C2
+            background: #0041C2
             color: white;
         }
 
