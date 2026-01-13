@@ -58,7 +58,7 @@ $nama = $dataNama['nama'];
         /* header dashboard */
         .card-header-blue {
             background: #0041C2
-            color: white;
+    
         }
 
         /* item menu */
@@ -92,7 +92,7 @@ $nama = $dataNama['nama'];
     <!-- card header -->
     <div class="card mb-3 shadow-sm">
         <div class="card-header card-header-blue">
-            <h4 class="mb-0">Dashboard Dosen</h4>
+            <h4 class="mb-0" style="color: white;">Dashboard Dosen</h4>
         </div>
         <div class="card-body">
             <p class="mb-0">
