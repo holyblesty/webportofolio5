@@ -116,7 +116,7 @@ if (isset($_SESSION['role'])) {
 
     /* Efek hover pada item dropdown */
     .dropdown-menu .dropdown-item:hover{
-      background-color:rgba(0,65,194,0.25);
+      background-color: #0041C240;
       color:#003399;
     }
 
@@ -135,10 +135,10 @@ if (isset($_SESSION['role'])) {
            KONTEN BOX
         ========================= */
         .content-box {
-            background: rgba(0,65,194,.1);
+            background: #0041C21A;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,.1);
+            box-shadow: 0 3px 10px #0000001A;
             margin-bottom: 20px;
             transition: .3s;
         }
@@ -164,7 +164,7 @@ if (isset($_SESSION['role'])) {
 
         /* Caption carousel */
         .custom-caption {
-            background: rgba(0,65,194,.3);
+            background: #0041C24D;
             border-radius: 12px;
             padding: 6px 12px;
             color: #fff;
@@ -195,7 +195,7 @@ if (isset($_SESSION['role'])) {
         }
 
         input.form-control:focus {
-            box-shadow: 0 0 5px rgba(0,65,194,.6);
+            box-shadow: 0 0 5px #0041C299;
             border-color: #0041C2;
         }
 
