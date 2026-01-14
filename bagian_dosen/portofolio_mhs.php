@@ -1,6 +1,6 @@
 <!-- 
 =========================================================
-  Nama File   : Portofolio_dsn.php
+  Nama File   : Portofolio_mhs.php
   Deskripsi   : Menampilkan portofolio bagian dosen
   Pembuat     : Jesina HolyBlesty Simatupang (3312511017)
               : Vivian Sarah Diva Alisianoi (3312511018)
@@ -11,7 +11,7 @@
 <?php
 
 // =========================
-// SESSION & KONEKSI
+// SESSION & KONEKSI DATABASE
 // =========================
 
 // memulai session
