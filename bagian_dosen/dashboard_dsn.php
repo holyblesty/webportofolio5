@@ -9,8 +9,10 @@
 -->
 
 <?php
-// session hanya aktif selama browser terbuka
-session_set_cookie_params(0);
+// =========================
+// SESSION & KONEKSI DATABASE
+// =========================
+
 // memulai session
 session_start();
 // memanggil koneksi database
@@ -105,7 +107,7 @@ $nama = $dataNama['nama'];
     <!-- menu navigasi dosen -->
     <div class="list-group mb-3 shadow-sm">
         <!-- menu portofolio mahasiswa -->
-        <a href="portofolio_dsn.php" class="list-group-item list-group-item-action">
+        <a href="portofolio_mhs.php" class="list-group-item list-group-item-action">
             📁 Portofolio Mahasiswa
         </a>
         <!-- menu ganti password -->
