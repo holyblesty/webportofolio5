@@ -1,19 +1,19 @@
-<?php
-/*
+<!-- 
 =========================================================
   Nama File   : proses_nilai.php
-  Deskripsi   : Proses pemberian dan pengeditan nilai
-                portofolio mahasiswa oleh dosen
+  Deskripsi   : Menampilkan portofolio bagian dosen
   Pembuat     : Jesina HolyBlesty Simatupang (3312511017)
               : Vivian Sarah Diva Alisianoi (3312511018)
   Tanggal     : 19 Oktober 2025
 =========================================================
-*/
+-->
 
+<?php
 // =========================
-// SESSION & KONEKSI
+// SESSION & KONEKSI DATABASE
 // =========================
-session_set_cookie_params(0);
+
+// memulai session
 session_start();
 include "../koneksi.php";
 
@@ -77,6 +77,25 @@ function simpanNilai($koneksi, $idDosen, $idPortofolio, $nilai, $catatan)
     }
 }
 
+/* =========================
+   PROSES HAPUS NILAI
+========================= */
+if (isset($_GET['hapus']) && isset($_GET['id_portofolio'])) {
+
+    $idPortofolio = $_GET['id_portofolio'];
+
+    mysqli_query(
+        $koneksi,
+        "DELETE FROM nilai
+         WHERE id_portofolio='$idPortofolio'
+         AND id_dosen='$idDosen'"
+    );
+
+    $_SESSION['pesan'] = "Nilai berhasil dihapus";
+    header("Location: portofolio_mhs.php");
+    exit;
+}
+
 // =========================
 // PROSES SIMPAN NILAI
 // =========================
@@ -98,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ? "Nilai berhasil disimpan"
         : "Gagal menyimpan nilai";
 
-    header("Location: portofolio_dsn.php");
+    header("Location: portofolio_mhs.php");
     exit;
 }
 
@@ -140,7 +159,6 @@ $nilaiData = mysqli_fetch_assoc($qNilai);
 <meta charset="UTF-8">
 <title><?= $nilaiData ? "Edit Nilai" : "Beri Nilai" ?></title>
 
-<!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
@@ -148,7 +166,6 @@ body {
     background: #f4f6fb;
 }
 
-/* header */
 .card-header-blue {
     background: #0041C2;
     color: white;
@@ -233,14 +250,24 @@ for ($i = 5; $i >= 1; $i--) {
 <textarea name="catatan" class="form-control" rows="4"><?= $nilaiData['catatan'] ?? '' ?></textarea>
 </div>
 
-<button class="btn btn-primary w-100">
+<button class="btn btn-primary w-100 mb-2">
 <?= $nilaiData ? "Perbarui Nilai" : "Simpan Nilai" ?>
 </button>
+
+<?php if ($nilaiData) { ?>
+<a
+    href="proses_nilai.php?hapus=1&id_portofolio=<?= $idPortofolio ?>"
+    onclick="return confirm('Yakin ingin menghapus nilai ini?')"
+    class="btn btn-danger w-100"
+>
+Hapus Nilai
+</a>
+<?php } ?>
 
 </form>
 
 <div class="text-center mt-3">
-<a href="portofolio_dsn.php">← Kembali</a>
+<a href="portofolio_mhs.php">← Kembali</a>
 </div>
 
 </div>
