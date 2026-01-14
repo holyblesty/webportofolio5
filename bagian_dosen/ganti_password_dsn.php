@@ -1,20 +1,19 @@
-<?php
-/*
+<!-- 
 =========================================================
   Nama File   : ganti_password_dsn.php
-  Deskripsi   : Halaman dan proses ganti password dosen
+  Deskripsi   : Menampilkan portofolio bagian dosen
   Pembuat     : Jesina HolyBlesty Simatupang (3312511017)
               : Vivian Sarah Diva Alisianoi (3312511018)
   Tanggal     : 19 Oktober 2025
 =========================================================
-*/
+-->
 
+<?php
 // =========================
 // SESSION & KONEKSI DATABASE
 // =========================
 
-// Session hanya aktif selama browser terbuka
-session_set_cookie_params(0);
+// memulai session
 session_start();
 
 // Koneksi ke database
