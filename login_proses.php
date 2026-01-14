@@ -10,9 +10,11 @@
 =========================================================
 */
 
-// session cookie hanya hidup selama browser terbuka
-session_set_cookie_params(0);
-// pemanggilan session
+// =========================
+// SESSION & KONEKSI DATABASE
+// =========================
+
+// memulai session
 session_start();
 
 // koneksi database
