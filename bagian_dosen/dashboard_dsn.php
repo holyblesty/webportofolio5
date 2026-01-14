@@ -53,7 +53,7 @@ $nama = $dataNama['nama'];
     <style>
         /* warna latar belakang halaman */
         body {
-            background: #FFF7F9;
+            background: #f4f7ff;
 
         }
 
