@@ -1,22 +1,19 @@
-<?php
-/*
+<!-- 
 =========================================================
-  Nama File   : portofolio_detail.php
-  Deskripsi   : Kelola (tambah, edit, hapus) portofolio mahasiswa
+  Nama File   : lihat_nilai.php
+  Deskripsi   : Menampilkan hasil penilaian dan komentar dari dosen pada bagian_mahasiswa
   Pembuat     : Jesina HolyBlesty Simatupang (3312511017)
               : Vivian Sarah Diva Alisianoi (3312511018)
   Tanggal     : 19 Oktober 2025
 =========================================================
-*/
+-->
 
+<?php
 // =========================
-// SESSION & KONEKSI
+// SESSION & KONEKSI DATABASE
 // =========================
 
-// Mengatur cookie session agar berakhir saat browser ditutup
-session_set_cookie_params(0);
-
-// Memulai session PHP
+// memulai session
 session_start();
 
 // Memanggil file koneksi database
@@ -45,9 +42,6 @@ $folderUpload = "../uploads/";
 
 // Menentukan ukuran maksimal file upload (2 MB)
 define('MAX_FILE_SIZE', 2 * 1024 * 1024);
-
-// Menentukan ekstensi file yang diperbolehkan
-$allowedExt = ['jpg', 'jpeg', 'png', 'gif'];
 
 // =========================
 // ERROR MESSAGE
