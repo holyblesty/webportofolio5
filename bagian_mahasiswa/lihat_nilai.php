@@ -10,11 +10,9 @@
 
 <?php
 // =========================
-// SESSION & KONEKSI
+// SESSION & KONEKSI DATABASE
 // =========================
 
-// session hanya aktif selama browser terbuka
-session_set_cookie_params(0);
 
 // memulai session
 session_start();
