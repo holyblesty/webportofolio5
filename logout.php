@@ -9,9 +9,10 @@
 -->
 
 <?php
-session_set_cookie_params(0);
-session_start();
-session_destroy();
-header("Location: index.php");
+session_start();          // Mulai session
+unset($_SESSION['username']); // Hapus session tertentu
+session_destroy();        // Hapus semua session
+setcookie(session_name(), '', time() - 3600, '/'); // Hapus cookie session
+header("Location: index.php"); // Redirect ke login
 exit;
 ?>
