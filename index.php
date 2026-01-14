@@ -96,12 +96,12 @@ if (isset($_SESSION['role'])) {
 
     /* ================= DROPDOWN ================= */
     .dropdown-menu{
-      min-width:280px; /* Lebar minimum dropdown */
-      background-color:#0041C226; /* Warna latar dropdown */
-      border-radius:10px; /* Sudut membulat */
-      padding:8px; /* Jarak dalam dropdown */
-      border:none; /* Menghilangkan border */
-      backdrop-filter:blur(6px); /* Efek blur latar */
+      min-width:280px; 
+      background-color:#0041C226; 
+      border-radius:10px; 
+      padding:8px;
+      border:none; 
+      backdrop-filter:blur(6px); 
     }
 
     /* Mengatur item pada dropdown */
