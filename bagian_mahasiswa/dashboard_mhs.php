@@ -9,7 +9,11 @@
 -->
 
 <?php
-session_set_cookie_params(0);
+// =========================
+// SESSION & KONEKSI DATABASE
+// =========================
+
+// memulai session
 session_start();
 include "../koneksi.php";
 
@@ -42,46 +46,46 @@ $nama = $dataNama['nama'];
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-        /* latar belakang halaman */
-        body {
-            background: #f4f7ff;
-        }
+<style>
+    /* latar belakang halaman */
+    body {
+        background: #f4f7ff;
+    }
 
-        /* header dashboard */
-        .card-header-blue {
-            background: #0041C2;
-            color: white;
-        }
+    /* header dashboard */
+    .card-header-blue {
+        background: #0041C2;
+        color: white;
+    }
 
-        /* menu list */
-        .list-group-item {
-            border: none;
-            padding: 12px 16px;
-        }
+    /* menu list */
+    .list-group-item {
+        border: none;
+        padding: 12px 16px;
+    }
 
-        /* hover menu */
-        .list-group-item-action:hover {
-            background: #e7efff;
-            color: #0041C2;
-        }
+    /* hover menu */
+    .list-group-item-action:hover {
+        background: #e7efff;
+        color: #0041C2;
+    }
 
-        /* tombol logout */
-        .logout-item {
-            color: #dc3545;
-        }
+    /* tombol logout */
+    .logout-item {
+        color: #dc3545;
+    }
 
-        .logout-item:hover {
-            background: #f8d7da;
-            color: #842029;
-        }
+    .logout-item:hover {
+        background: #f8d7da;
+        color: #842029;
+    }
 
-        /* preview gambar */
-        img.preview {
-            max-width: 80px;
-            border-radius: 6px;
-        }
-    </style>
+    /* preview gambar */
+    img.preview {
+        max-width: 80px;
+        border-radius: 6px;
+    }
+</style>
 </head>
 
 <body>
@@ -133,6 +137,7 @@ $nama = $dataNama['nama'];
                         <th width="5%">No</th>
                         <th width="15%">Gambar</th>
                         <th>Judul</th>
+                        <th>Deskripsi</th>
                         <th width="15%">Repository</th>
                         <th width="25%">Kelola</th>
                     </tr>
@@ -149,7 +154,7 @@ $queryPortofolio = mysqli_query(
 if (mysqli_num_rows($queryPortofolio) == 0) {
     echo "
         <tr>
-            <td colspan='5' class='text-center'>
+            <td colspan='6' class='text-center'>
                 Belum ada portofolio.
             </td>
         </tr>
@@ -168,6 +173,8 @@ if (mysqli_num_rows($queryPortofolio) == 0) {
             </td>
 
             <td><?= htmlspecialchars($p['judul']) ?></td>
+
+            <td><?= htmlspecialchars($p['deskripsi']) ?></td>
 
             <td class="text-center">
                 <?php if ($p['repo_link']) { ?>
