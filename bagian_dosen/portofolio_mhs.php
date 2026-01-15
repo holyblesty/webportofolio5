@@ -277,7 +277,8 @@ if (mysqli_num_rows($query) === 0) {
     <td class="text-center">
         <a
             href="proses_nilai.php?id_portofolio=<?= $p['id_portofolio'] ?>"
-            class="btn btn-sm btn-primary-custom"
+            class="btn btn-sm <?= ($p['nilai'] === null) ? 'btn-warning' : 'btn-primary' ?>"
+
         >
             <?= ($p['nilai'] === null) ? 'Nilai' : 'Edit' ?>
         </a>
