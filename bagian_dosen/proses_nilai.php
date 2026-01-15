@@ -250,7 +250,7 @@ for ($i = 5; $i >= 1; $i--) {
 <textarea name="catatan" class="form-control" rows="4"><?= $nilaiData['catatan'] ?? '' ?></textarea>
 </div>
 
-<button class="btn btn-primary w-100 mb-2">
+<button class="btn btn-success w-100 mb-2">
 <?= $nilaiData ? "Perbarui Nilai" : "Simpan Nilai" ?>
 </button>
 
